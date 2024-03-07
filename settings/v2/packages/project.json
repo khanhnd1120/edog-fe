@@ -1,0 +1,36 @@
+{
+  "__version__": "1.0.4",
+  "general": {
+    "designResolution": {
+      "width": 1920,
+      "height": 1080,
+      "fitHeight": false,
+      "fitWidth": true
+    }
+  },
+  "layer": [
+    {
+      "name": "DIALOG",
+      "value": 1
+    },
+    {
+      "name": "SPRITE",
+      "value": 2
+    }
+  ],
+  "sorting-layer": {
+    "layers": [
+      {
+        "id": 0,
+        "name": "default",
+        "value": 0
+      },
+      {
+        "id": 1,
+        "name": "UI",
+        "value": 1
+      }
+    ],
+    "increaseId": 1
+  }
+}
