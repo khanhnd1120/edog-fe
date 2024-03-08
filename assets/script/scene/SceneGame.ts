@@ -2,25 +2,25 @@ import {
   _decorator,
   Component,
   Node,
-  director,
-  Director,
-  view,
   Canvas,
   UITransform,
   Prefab,
   instantiate,
   Vec3,
   SpriteFrame,
-  Sprite,
   input,
   Input,
   KeyCode,
   Label,
+  Graphics,
+  Color,
 } from "cc";
 import { G } from "../G";
 import { LayerAnimation } from "../components/LayerAnimation";
-import { Direction } from "../shared/GameInterface";
+import { DialogType, Direction, GameState } from "../shared/GameInterface";
 import { ColyseusManager } from "../../Libs/ColyseusManager";
+import { Fish } from "../components/Fish";
+import { Hook } from "../components/Hook";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneGame")
@@ -48,15 +48,27 @@ export class SceneGame extends Component {
   @property({ type: Label })
   stage: Label;
   @property({ type: Label })
-  score: Label;
+  scoreLabel: Label;
   @property({ type: Label })
   countdownLabel: Label;
+  @property({ type: Node })
+  countdown: Node;
   @property({ type: Label })
   timerLabel: Label;
   @property({ type: Label })
   requireScoreLabel: Label;
   @property({ type: Node })
-  countdown: Node;
+  leftWall: Node;
+  @property({ type: Node })
+  rightWall: Node;
+  @property({ type: [Node] })
+  trees: Node[] = [];
+  @property({ type: Node })
+  line: Node;
+
+  score: number;
+  player: Node;
+  hook: Node;
   fishes: {
     [key: number]: {
       node: Node;
@@ -66,14 +78,29 @@ export class SceneGame extends Component {
   };
 
   start() {
-    G.sceneWidth = this.bottomRight.position.x - this.topLeft.position.x;
+    const realWidth = this.bottomRight.position.x - this.topLeft.position.x;
+    G.sceneWidth = realWidth;
     G.sceneHeight = this.topLeft.position.y - this.bottomRight.position.y;
     G.unit = G.sceneWidth / G.config.getConfigData().MapWidth;
-    console.log(G.sceneHeight, G.sceneWidth, "abc", 12 * G.unit,)
-    if (12 * G.unit > G.sceneHeight) {
-      console.log("dmm")
-      G.unit = G.sceneHeight / 12;
-      G.sceneWidth = G.unit * G.config.getConfigData().MapWidth
+    if (24 * G.unit > G.sceneHeight) {
+      G.unit = G.sceneHeight / 24;
+      G.sceneWidth = G.unit * G.config.getConfigData().MapWidth;
+      const wallWidth = realWidth - G.sceneHeight;
+      this.leftWall.getComponent(UITransform).width = wallWidth;
+      this.leftWall.setPosition(
+        new Vec3(-G.sceneWidth / 2 - wallWidth / 2, -G.sceneHeight / 2)
+      );
+
+      this.rightWall.getComponent(UITransform).width = wallWidth;
+      this.rightWall.setPosition(
+        new Vec3(G.sceneWidth / 2 + wallWidth / 2, -G.sceneHeight / 2)
+      );
+
+      this.sky.getComponent(UITransform).width = realWidth;
+      this.trees.map((tree, index) => {
+        tree.getComponent(UITransform).width = realWidth / 3;
+        tree.setPosition(new Vec3((index * realWidth) / 3 - realWidth / 3));
+      });
     }
     this.fishes = {};
     this.countdown.active = true;
@@ -82,19 +109,40 @@ export class SceneGame extends Component {
     });
   }
 
+  update(dt: number) {
+    if (this.player && this.hook) {
+      const drawing = this.line.getComponent(Graphics);
+      drawing.clear();
+      drawing.lineWidth = 4;
+      drawing.moveTo(this.player.position.x, this.player.position.y);
+      drawing.lineTo(
+        this.hook.position.x,
+        this.hook.position.y +
+          this.hook.scale.y * this.hook.getComponent(UITransform).height
+      );
+      drawing.stroke();
+    }
+  }
+
   renderUI() {
-    const serverObject =
-      ColyseusManager.Instance().getServerObject().state;
+    const serverObject = ColyseusManager.Instance().getServerObject().state;
     if (serverObject) {
+      serverObject.listen("gameState", (gameState: GameState) => {
+        switch (gameState) {
+          case GameState.GameOver:
+            G.gameRoot.showDialog(DialogType.DialogEndGame);
+            break;
+        }
+      });
       serverObject.listen("stage", (stage: number) => {
-        this.stage.string = `Stage: ${stage}`
-      })
+        this.stage.string = `Stage: ${stage}`;
+      });
       serverObject.listen("remainTime", (remainTime: number) => {
         this.timerLabel.string = Math.ceil(remainTime).toString();
-      })
+      });
       serverObject.listen("requireScore", (requireScore: number) => {
         this.requireScoreLabel.string = `Require Score: ${requireScore}`;
-      })
+      });
       serverObject.listen("countDownTime", (countDownTime: number) => {
         this.countdownLabel.string = Math.ceil(countDownTime).toString();
         if (countDownTime < 0) {
@@ -106,12 +154,14 @@ export class SceneGame extends Component {
           input.on(Input.EventType.KEY_DOWN, (event) => {
             switch (event.keyCode) {
               case KeyCode.SPACE:
-                ColyseusManager.Instance().getServerObject().send("on-tap", true);
+                ColyseusManager.Instance()
+                  .getServerObject()
+                  .send("on-tap", true);
                 break;
             }
           });
         }
-      })
+      });
     }
   }
   renderFish() {
@@ -120,43 +170,37 @@ export class SceneGame extends Component {
     serverObject.onAdd((fishData: any) => {
       if (!this.fishes[fishData.uid]) {
         const fish = instantiate(this.fishPrefab);
-        // set sprite
-        fish.getComponent(Sprite).spriteFrame =
-          this.fishSpriteFrames[fishData.id];
-        if (fishData.direction == Direction.Left) {
-          fish.getComponent(Sprite).spriteFrame.flipUVX = true
-        }
-        // set position
         const { x: newX, y: newY } = G.convertPosition({
           x: fishData.pos.x,
           y: fishData.pos.y,
         });
-        fish.setPosition(newX, newY);
-        // set width; height
-        fish.getComponent(UITransform).width = fishData.size * G.unit;
-        fish.getComponent(UITransform).height = 3 * G.unit;
-        // add child
+        fish.getComponent(Fish).init({
+          spriteFrame: this.fishSpriteFrames[fishData.id],
+          direction: fishData.direction,
+          x: newX,
+          y: newY,
+          width: fishData.size * G.unit,
+          height: 3 * G.unit,
+          serverObject: fishData,
+        });
         this.gamePanel.addChild(fish);
         this.fishes[fishData.uid] = {
           node: fish,
           id: fishData.id,
           serverObject: fishData,
         };
-        fishData.listen("pos", ({ x, y }: { x: number; y: number }) => {
-          const { x: newX, y: newY } = G.convertPosition({ x, y });
-          fish.setPosition(newX, newY);
-        });
       }
     });
 
     serverObject.onRemove((fishData: any) => {
       this.fishes[fishData.uid].node.destroy();
-      delete this.fishes[fishData.uid]
-    })
+      delete this.fishes[fishData.uid];
+    });
   }
   renderPlayer() {
     const player = instantiate(this.playerPrefab);
     this.gamePanel.addChild(player);
+    this.player = player;
     const serverObject =
       ColyseusManager.Instance().getServerObject().state.hook;
     if (serverObject) {
@@ -167,23 +211,22 @@ export class SceneGame extends Component {
     }
   }
   renderHook() {
-    const hook = instantiate(this.hookPrefab);
-    this.gamePanel.addChild(hook);
     const serverObject =
       ColyseusManager.Instance().getServerObject().state.hook;
+    const hook = instantiate(this.hookPrefab);
+    hook.getComponent(Hook).init({
+      serverObject,
+    });
+    this.gamePanel.addChild(hook);
+    this.hook = hook;
     if (serverObject) {
-      serverObject.listen("pos", ({ x, y }: { x: number; y: number }) => {
-        const { x: newX, y: newY } = G.convertPosition({ x, y });
-        hook.setPosition(newX, newY);
-      });
       serverObject.listen("score", (score: number) => {
-        this.score.string = `Score: ${score}`
-      })
+        this.scoreLabel.string = `Score: ${score}`;
+      });
     }
   }
   renderMap() {
     this.sky.getComponent(UITransform).height = G.unit * 24;
-    console.log("aaaaaaaaaaa", G.unit * 24)
     for (let i = 0; i < G.config.getConfigData().NumberLayer; i++) {
       this.backgroundLayers.map((item, indexLayer) => {
         const speed = Math.random() * 10 + 4 * i;
@@ -191,7 +234,7 @@ export class SceneGame extends Component {
           const backgroundLayer = instantiate(item);
           backgroundLayer.getComponent(LayerAnimation).init({
             width: G.sceneWidth + 100,
-            height: 3 * G.unit - 30,
+            height: i == 0 ? 3 * G.unit : 3 * G.unit - 30,
             x: -j * G.sceneWidth,
             y: -G.unit * (3 * i + 1.5) - 15,
             direction: [Direction.Left, Direction.Right][indexLayer % 2],

@@ -72,6 +72,16 @@ export class ColyseusManager extends Component {
   //#endregion
 
   //#region Game Methods
+  public Close(): void {
+    this.node.active = false;
+    delete this.game;
+  }
+
+  public EndGame(): void {
+    this.game.leave();
+    this.Close();
+  }
+
   public async OnJoinGame(callback: any) {
     const name = "gold-digger";
     log(`${this.TAG} JoinGame ${this.game}`);

@@ -14,3 +14,13 @@ export enum Direction {
   Left,
   Right,
 }
+
+export enum DialogType {
+  DialogEndGame,
+}
+
+export enum GameState {
+  Prepare,
+  Pending,
+  GameOver,
+}
