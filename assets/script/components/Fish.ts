@@ -53,8 +53,8 @@ export class Fish extends Component {
 
   update(dt: number) {
     if (
-      Math.abs(this.x - this.node.position.x) > 100 ||
-      Math.abs(this.y - this.node.position.y) > 100
+      Math.abs(this.x - this.node.position.x) > 5 * G.unit ||
+      Math.abs(this.y - this.node.position.y) > 5 * G.unit
     ) {
       this.node.setPosition(this.x, this.y);
       return;
