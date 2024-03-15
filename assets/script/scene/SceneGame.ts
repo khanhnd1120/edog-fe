@@ -115,11 +115,7 @@ export class SceneGame extends Component {
       drawing.clear();
       drawing.lineWidth = 4;
       drawing.moveTo(this.player.position.x, this.player.position.y);
-      drawing.lineTo(
-        this.hook.position.x,
-        this.hook.position.y +
-          this.hook.scale.y * this.hook.getComponent(UITransform).height
-      );
+      drawing.lineTo(this.hook.position.x, this.hook.position.y);
       drawing.stroke();
     }
   }
@@ -175,7 +171,7 @@ export class SceneGame extends Component {
           y: fishData.pos.y,
         });
         fish.getComponent(Fish).init({
-          spriteFrame: this.fishSpriteFrames[fishData.id],
+          id: fishData.id,
           direction: fishData.direction,
           x: newX,
           y: newY,
