@@ -42,9 +42,13 @@ class GlobalInstance {
   }
   public convertPosition({ x, y }: { x: number; y: number }) {
     return {
-      x: x * this.unit - 16 * this.unit,
-      y: y * this.unit - 12 * this.unit,
+      x: x * this.unit - (this.config.getConfigData().MapWidth / 2) * this.unit,
+      y:
+        y * this.unit - (this.config.getConfigData().MapHeight / 2) * this.unit,
     };
+  }
+  public getRndInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 }
 export const G = GlobalInstance.Instance;

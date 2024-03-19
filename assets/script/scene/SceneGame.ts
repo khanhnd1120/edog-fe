@@ -13,11 +13,12 @@ import {
   KeyCode,
   Label,
   Graphics,
-  Color,
+  Sprite,
+  ProgressBar,
+  UIOpacity,
 } from "cc";
 import { G } from "../G";
-import { LayerAnimation } from "../components/LayerAnimation";
-import { DialogType, Direction, GameState } from "../shared/GameInterface";
+import { DialogType, GameConfigKey, GameState } from "../shared/GameInterface";
 import { ColyseusManager } from "../../Libs/ColyseusManager";
 import { Fish } from "../components/Fish";
 import { Hook } from "../components/Hook";
@@ -31,40 +32,40 @@ export class SceneGame extends Component {
   topLeft: Node;
   @property({ type: Node })
   bottomRight: Node;
-  @property({ type: [Prefab] })
-  backgroundLayers: Prefab[] = [];
   @property({ type: Node })
   gamePanel: Node;
   @property({ type: Node })
-  sky: Node;
+  timerIcon: Node;
   @property({ type: Prefab })
   playerPrefab: Prefab;
   @property({ type: Prefab })
   hookPrefab: Prefab;
   @property({ type: Prefab })
   fishPrefab: Prefab;
-  @property({ type: [SpriteFrame] })
-  fishSpriteFrames: SpriteFrame[] = [];
-  @property({ type: Label })
-  stage: Label;
   @property({ type: Label })
   scoreLabel: Label;
+  @property({ type: Label })
+  totalScoreLabel: Label;
   @property({ type: Label })
   countdownLabel: Label;
   @property({ type: Node })
   countdown: Node;
-  @property({ type: Label })
-  timerLabel: Label;
   @property({ type: Label })
   requireScoreLabel: Label;
   @property({ type: Node })
   leftWall: Node;
   @property({ type: Node })
   rightWall: Node;
-  @property({ type: [Node] })
-  trees: Node[] = [];
   @property({ type: Node })
   line: Node;
+  @property({ type: [Node] })
+  backgrounds: Node[] = [];
+  @property({ type: [SpriteFrame] })
+  iconTimers: SpriteFrame[] = [];
+  @property({ type: Prefab })
+  bubbles: Prefab;
+  @property({ type: Node })
+  timerCounter: Node;
 
   score: number;
   player: Node;
@@ -82,31 +83,27 @@ export class SceneGame extends Component {
     G.sceneWidth = realWidth;
     G.sceneHeight = this.topLeft.position.y - this.bottomRight.position.y;
     G.unit = G.sceneWidth / G.config.getConfigData().MapWidth;
-    if (24 * G.unit > G.sceneHeight) {
-      G.unit = G.sceneHeight / 24;
+    if (G.config.getConfigData().MapHeight * G.unit > G.sceneHeight) {
+      G.unit = G.sceneHeight / G.config.getConfigData().MapHeight;
       G.sceneWidth = G.unit * G.config.getConfigData().MapWidth;
       const wallWidth = realWidth - G.sceneHeight;
       this.leftWall.getComponent(UITransform).width = wallWidth;
-      this.leftWall.setPosition(
-        new Vec3(-G.sceneWidth / 2 - wallWidth / 2, -G.sceneHeight / 2)
-      );
+      this.leftWall.setPosition(new Vec3(-G.sceneWidth / 2 - wallWidth / 2, 0));
 
       this.rightWall.getComponent(UITransform).width = wallWidth;
-      this.rightWall.setPosition(
-        new Vec3(G.sceneWidth / 2 + wallWidth / 2, -G.sceneHeight / 2)
-      );
-
-      this.sky.getComponent(UITransform).width = realWidth;
-      this.trees.map((tree, index) => {
-        tree.getComponent(UITransform).width = realWidth / 3;
-        tree.setPosition(new Vec3((index * realWidth) / 3 - realWidth / 3));
-      });
+      this.rightWall.setPosition(new Vec3(G.sceneWidth / 2 + wallWidth / 2, 0));
     }
     this.fishes = {};
     this.countdown.active = true;
+    this.timerCounter.getComponent(ProgressBar).progress = 0;
+    this.backgrounds.map((bg) => {
+      bg.getComponent(UITransform).width = realWidth;
+      bg.getComponent(UIOpacity).opacity = 0;
+    });
     ColyseusManager.Instance().OnJoinGame(() => {
       this.renderUI();
     });
+    this.renderBubbles();
   }
 
   update(dt: number) {
@@ -130,14 +127,11 @@ export class SceneGame extends Component {
             break;
         }
       });
-      serverObject.listen("stage", (stage: number) => {
-        this.stage.string = `Stage: ${stage}`;
-      });
       serverObject.listen("remainTime", (remainTime: number) => {
-        this.timerLabel.string = Math.ceil(remainTime).toString();
+        this.onChangeRemainTime(remainTime);
       });
       serverObject.listen("requireScore", (requireScore: number) => {
-        this.requireScoreLabel.string = `Require Score: ${requireScore}`;
+        this.requireScoreLabel.string = `Target: ${requireScore}`;
       });
       serverObject.listen("countDownTime", (countDownTime: number) => {
         this.countdownLabel.string = Math.ceil(countDownTime).toString();
@@ -217,28 +211,87 @@ export class SceneGame extends Component {
     this.hook = hook;
     if (serverObject) {
       serverObject.listen("score", (score: number) => {
-        this.scoreLabel.string = `Score: ${score}`;
+        this.scoreLabel.string = `Current: ${score}`;
+      });
+      serverObject.listen("totalScore", (score: number) => {
+        this.totalScoreLabel.string = `Total earned: ${score}`;
       });
     }
   }
+  onChangeRemainTime(time: number) {
+    const stageTime =
+      G.config.getConfigData().GameConfig[GameConfigKey.StageTime];
+    const countBackground = this.backgrounds.length;
+    let backgroundIndex = Math.floor(time / (stageTime / countBackground));
+    if (backgroundIndex < 0) {
+      backgroundIndex = 0;
+    }
+    if (backgroundIndex >= countBackground) {
+      backgroundIndex = countBackground - 1;
+    }
+    let nextBg = backgroundIndex - 1;
+    if (nextBg < 0) {
+      nextBg = countBackground - 1;
+    }
+    const nextBgOpactity =
+      ((stageTime -
+        (countBackground - 1 - backgroundIndex) *
+          (stageTime / countBackground) -
+        time) /
+        (stageTime / countBackground)) *
+      255;
+    this.backgrounds[backgroundIndex].getComponent(UIOpacity).opacity =
+      255 - nextBgOpactity;
+    this.backgrounds[nextBg].getComponent(UIOpacity).opacity = nextBgOpactity;
+
+    const countTimerIcon = this.iconTimers.length;
+    let timerIndex = Math.floor(time / (stageTime / countTimerIcon));
+    if (timerIndex < 0) {
+      timerIndex = 0;
+    }
+    if (timerIndex >= countTimerIcon) {
+      timerIndex = countTimerIcon - 1;
+    }
+    if (
+      this.timerIcon.getComponent(Sprite).spriteFrame.name !=
+      this.iconTimers[timerIndex].name
+    ) {
+      this.timerIcon.getComponent(Sprite).spriteFrame =
+        this.iconTimers[timerIndex];
+    }
+
+    const percentTimeRemain = time / stageTime;
+    this.timerCounter.getComponent(ProgressBar).progress =
+      1 - percentTimeRemain;
+  }
   renderMap() {
-    this.sky.getComponent(UITransform).height = G.unit * 24;
-    for (let i = 0; i < G.config.getConfigData().NumberLayer; i++) {
-      this.backgroundLayers.map((item, indexLayer) => {
-        const speed = Math.random() * 10 + 4 * i;
-        for (let j = 0; j < 3; j++) {
-          const backgroundLayer = instantiate(item);
-          backgroundLayer.getComponent(LayerAnimation).init({
-            width: G.sceneWidth + 100,
-            height: i == 0 ? 3 * G.unit : 3 * G.unit - 30,
-            x: -j * G.sceneWidth,
-            y: -G.unit * (3 * i + 1.5) - 15,
-            direction: [Direction.Left, Direction.Right][indexLayer % 2],
-            speed,
-          });
-          this.gamePanel.addChild(backgroundLayer);
-        }
-      });
+    this.backgrounds.map((bg) => {
+      bg.getComponent(UITransform).height =
+        G.unit * G.config.getConfigData().MapHeight;
+      bg.getComponent(UITransform).width =
+        G.unit * G.config.getConfigData().MapWidth;
+    });
+
+    this.leftWall.active = true;
+    this.rightWall.active = true;
+  }
+  renderBubbles() {
+    for (let i = 0; i < 20; i++) {
+      const newBubble = instantiate(this.bubbles);
+      newBubble.setPosition(
+        new Vec3(
+          G.getRndInteger(
+            (-G.config.getConfigData().MapWidth * G.unit) / 2,
+            (G.config.getConfigData().MapWidth * G.unit) / 2
+          ),
+          G.getRndInteger(
+            (-G.config.getConfigData().MapHeight * G.unit) / 2,
+            (-G.config.getConfigData().MapHeight * G.unit) / 2 +
+              (G.config.getConfigData().NumberLayer + 2) * G.unit
+          )
+        )
+      );
+      this.gamePanel.addChild(newBubble);
     }
   }
 }

@@ -5,6 +5,7 @@ interface ConfigData {
   NumberLayer: number;
   MapWidth: number;
   GameConfig: number[];
+  MapHeight: number;
 }
 
 @ccclass("GameConfig")

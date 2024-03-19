@@ -1,4 +1,4 @@
-import { _decorator, Component, misc, Node, Quat, Vec3 } from "cc";
+import { _decorator, Component, math, misc, Node, Quat, Vec3 } from "cc";
 import { G } from "../G";
 const { ccclass, property } = _decorator;
 
@@ -8,6 +8,7 @@ export class Hook extends Component {
   x: number = 0;
   y: number = 0;
   angle: number = 0;
+  preAngle: number = 0;
 
   init({ serverObject }: { serverObject: any }) {
     serverObject.listen("pos", ({ x, y }: { x: number; y: number }) => {
@@ -31,12 +32,9 @@ export class Hook extends Component {
     );
     this.node.setPosition(t);
 
-    let r = Vec3.lerp<Vec3>(
-      lerp,
-      this.node.rotation,
-      new Vec3(0, 0, (this.angle / 180) * Math.PI),
-      s
-    );
-    this.node.setRotation(new Quat(r.x, r.y, r.z));
+    let r = math.lerp(this.preAngle, this.angle, s);
+
+    this.node.setRotationFromEuler(new Vec3(0, 0, r));
+    this.preAngle = r;
   }
 }
