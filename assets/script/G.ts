@@ -37,8 +37,8 @@ class GlobalInstance {
   public enterHall() {
     director.loadScene("hall");
   }
-  public enterAuth() {
-    director.loadScene("auth");
+  public enterGame() {
+    director.loadScene("game");
   }
   public convertPosition({ x, y }: { x: number; y: number }) {
     return {

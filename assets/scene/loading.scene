@@ -100,7 +100,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 960,
-      "y": 720,
+      "y": 540,
       "z": 0
     },
     "_lrot": {
@@ -183,7 +183,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 720,
+    "_orthoHeight": 646.0188087774295,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -968,7 +968,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 231.08,
+      "width": 316.2,
       "height": 54.4
     },
     "_anchorPoint": {
@@ -997,7 +997,7 @@
       "b": 203,
       "a": 255
     },
-    "_string": "GAME OVER",
+    "_string": "Congratulations",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -1673,7 +1673,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1440
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1834,7 +1834,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 960,
-      "y": 720,
+      "y": 540,
       "z": 0
     },
     "_lrot": {
@@ -1917,7 +1917,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 720,
+    "_orthoHeight": 646.0188087774295,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -2330,7 +2330,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1920,
-      "height": 1440
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

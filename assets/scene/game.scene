@@ -194,7 +194,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 712.549388523048,
+    "_orthoHeight": 646.0188087774295,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -2838,7 +2838,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "3",
+    "_string": "Loading...",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 200,

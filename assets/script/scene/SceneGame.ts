@@ -22,6 +22,7 @@ import { DialogType, GameConfigKey, GameState } from "../shared/GameInterface";
 import { ColyseusManager } from "../../Libs/ColyseusManager";
 import { Fish } from "../components/Fish";
 import { Hook } from "../components/Hook";
+import { DialogEndGame } from "../dialogs/DialogEndGame";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneGame")
@@ -133,6 +134,11 @@ export class SceneGame extends Component {
       serverObject.listen("requireScore", (requireScore: number) => {
         this.requireScoreLabel.string = `Target: ${requireScore}`;
       });
+      serverObject.listen("startGame", (startGame: number) => {
+        if (!startGame) {
+          this.countdownLabel.string = "Loading..."
+        }
+      })
       serverObject.listen("countDownTime", (countDownTime: number) => {
         this.countdownLabel.string = Math.ceil(countDownTime).toString();
         if (countDownTime < 0) {
@@ -215,6 +221,7 @@ export class SceneGame extends Component {
       });
       serverObject.listen("totalScore", (score: number) => {
         this.totalScoreLabel.string = `Total earned: ${score}`;
+        G.gameRoot.dialogNodes[DialogType.DialogEndGame].getComponent(DialogEndGame).init(`${score}`)
       });
     }
   }
@@ -236,7 +243,7 @@ export class SceneGame extends Component {
     const nextBgOpactity =
       ((stageTime -
         (countBackground - 1 - backgroundIndex) *
-          (stageTime / countBackground) -
+        (stageTime / countBackground) -
         time) /
         (stageTime / countBackground)) *
       255;
@@ -287,7 +294,7 @@ export class SceneGame extends Component {
           G.getRndInteger(
             (-G.config.getConfigData().MapHeight * G.unit) / 2,
             (-G.config.getConfigData().MapHeight * G.unit) / 2 +
-              (G.config.getConfigData().NumberLayer + 2) * G.unit
+            (G.config.getConfigData().NumberLayer + 2) * G.unit
           )
         )
       );

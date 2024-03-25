@@ -7,6 +7,7 @@ import {
   error,
   log,
   Node,
+  sys,
 } from "cc";
 const { ccclass, property } = _decorator;
 
@@ -54,7 +55,7 @@ export class ColyseusManager extends Component {
     this.InitColyseus();
   }
 
-  update(deltaTime: number) {}
+  update(deltaTime: number) { }
   //#endregion
 
   //#region Lobby Methods
@@ -85,8 +86,11 @@ export class ColyseusManager extends Component {
   public async OnJoinGame(callback: any) {
     const name = "gold-digger";
     log(`${this.TAG} JoinGame ${this.game}`);
+    let token = sys.localStorage.getItem("access_token");
+    let searchParams = new URLSearchParams(window.location.search);
+    let poolID = searchParams.get("poolId");
     try {
-      this.game = await this.client.joinOrCreate(name);
+      this.game = await this.client.joinOrCreate(name, { pool_id: poolID, token: token });
       log(`join ${name} successfully!`);
       log("user's sessionId:", this.game.sessionId);
       callback(true, this.game);
@@ -108,8 +112,7 @@ export class ColyseusManager extends Component {
   //#region Colyseus Methods
   private InitColyseus(): void {
     this.client = new Colyseus.Client(
-      `${this.useSSL ? "wss" : "ws"}://${this.hostname}${
-        [443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
+      `${this.useSSL ? "wss" : "ws"}://${this.hostname}${[443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
       }`
     );
 
@@ -124,7 +127,7 @@ export class ColyseusManager extends Component {
       log("joined Lobby successfully!");
       //log("user's sessionId:", this.lobby.sessionId);
       this.GetConfigs();
-      G.enterHall();
+      G.enterGame();
       this.lobby.onStateChange((state) => {
         log("onStateChange: ", JSON.stringify(state));
       });
