@@ -16,6 +16,7 @@ import {
   Sprite,
   ProgressBar,
   UIOpacity,
+  AudioSource,
 } from "cc";
 import { G } from "../G";
 import { DialogType, GameConfigKey, GameState } from "../shared/GameInterface";
@@ -67,6 +68,10 @@ export class SceneGame extends Component {
   bubbles: Prefab;
   @property({ type: Node })
   timerCounter: Node;
+  @property({ type: AudioSource })
+  scoreSmallSfx: AudioSource;
+  @property({ type: AudioSource })
+  scoreBigSfx: AudioSource;
 
   score: number;
   player: Node;
@@ -98,7 +103,8 @@ export class SceneGame extends Component {
     this.countdown.active = true;
     this.timerCounter.getComponent(ProgressBar).progress = 0;
     this.backgrounds.map((bg) => {
-      bg.getComponent(UITransform).width = realWidth;
+      bg.getComponent(UITransform).width = G.sceneWidth;
+      bg.getComponent(UITransform).height = G.sceneHeight;
       bg.getComponent(UIOpacity).opacity = 0;
     });
     ColyseusManager.Instance().OnJoinGame(() => {
@@ -136,9 +142,9 @@ export class SceneGame extends Component {
       });
       serverObject.listen("startGame", (startGame: number) => {
         if (!startGame) {
-          this.countdownLabel.string = "Loading..."
+          this.countdownLabel.string = "Loading...";
         }
-      })
+      });
       serverObject.listen("countDownTime", (countDownTime: number) => {
         this.countdownLabel.string = Math.ceil(countDownTime).toString();
         if (countDownTime < 0) {
@@ -189,6 +195,14 @@ export class SceneGame extends Component {
     });
 
     serverObject.onRemove((fishData: any) => {
+      if (this.fishes[fishData.uid]) {
+        const layer = this.fishes[fishData.uid].serverObject.layer;
+        if (layer < 2) {
+          this.scoreSmallSfx.play();
+        } else {
+          this.scoreBigSfx.play();
+        }
+      }
       this.fishes[fishData.uid].node.destroy();
       delete this.fishes[fishData.uid];
     });
@@ -221,7 +235,9 @@ export class SceneGame extends Component {
       });
       serverObject.listen("totalScore", (score: number) => {
         this.totalScoreLabel.string = `Total earned: ${score}`;
-        G.gameRoot.dialogNodes[DialogType.DialogEndGame].getComponent(DialogEndGame).init(`${score}`)
+        G.gameRoot.dialogNodes[DialogType.DialogEndGame]
+          .getComponent(DialogEndGame)
+          .init(`${score}`);
       });
     }
   }
@@ -243,7 +259,7 @@ export class SceneGame extends Component {
     const nextBgOpactity =
       ((stageTime -
         (countBackground - 1 - backgroundIndex) *
-        (stageTime / countBackground) -
+          (stageTime / countBackground) -
         time) /
         (stageTime / countBackground)) *
       255;
@@ -294,7 +310,7 @@ export class SceneGame extends Component {
           G.getRndInteger(
             (-G.config.getConfigData().MapHeight * G.unit) / 2,
             (-G.config.getConfigData().MapHeight * G.unit) / 2 +
-            (G.config.getConfigData().NumberLayer + 2) * G.unit
+              (G.config.getConfigData().NumberLayer + 2) * G.unit
           )
         )
       );

@@ -1,6 +1,8 @@
 import {
   _decorator,
+  AudioSource,
   Component,
+  Label,
   Node,
   Quat,
   sp,
@@ -15,8 +17,12 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Fish")
 export class Fish extends Component {
-  @property({ type: [UITransform] })
-  boxs: UITransform[] = [];
+  @property({ type: Label })
+  pointLabel: Label;
+  @property({ type: Node })
+  point: Node;
+  @property({ type: [Node] })
+  boxs: Node[] = [];
   serverObject: any;
   x: number = 0;
   y: number = 0;
@@ -45,14 +51,14 @@ export class Fish extends Component {
     setTimeout(() => {
       skeleton.animation = "idle";
     }, 10);
+    const boxUI = this.boxs[id].getComponent(UITransform);
     if (direction == Direction.Left) {
-      this.node.setScale(
-        new Vec3(width / this.boxs[id].width, +width / this.boxs[id].width, 1)
-      );
+      this.node.setScale(new Vec3(width / boxUI.width, width / boxUI.width, 1));
     } else {
       this.node.setScale(
-        new Vec3(-width / this.boxs[id].width, +width / this.boxs[id].width, 1)
+        new Vec3(-width / boxUI.width, width / boxUI.width, 1)
       );
+      this.point.setScale(-1, 1, 0);
     }
     this.node.setPosition(x, y);
     this.x = this.convertPosToCenter(x, y).x;
@@ -61,10 +67,18 @@ export class Fish extends Component {
     // set width; height
     this.node.getComponent(UITransform).width = width;
     this.node.getComponent(UITransform).height = height;
+    // set point pos
+    this.point.setPosition(
+      this.boxs[id].position.x,
+      this.boxs[id].position.y + boxUI.height / 2
+    );
     serverObject.listen("pos", ({ x, y }: { x: number; y: number }) => {
       const { x: newX, y: newY } = G.convertPosition({ x, y });
       this.x = this.convertPosToCenter(newX, newY).x;
       this.y = this.convertPosToCenter(newX, newY).y;
+    });
+    serverObject.listen("score", (score: number) => {
+      this.pointLabel.string = `${score}`;
     });
     serverObject.listen("isPulled", (isPulled: boolean) => {
       if (isPulled) {

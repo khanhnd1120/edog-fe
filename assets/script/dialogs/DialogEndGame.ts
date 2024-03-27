@@ -15,7 +15,7 @@ export class DialogEndGame extends Component {
 
   onButtonHomClick() {
     G.gameRoot.hideDialog(DialogType.DialogEndGame);
-    director.loadScene("hall");
+    director.loadScene("game");
     ColyseusManager.Instance().EndGame();
   }
 }
