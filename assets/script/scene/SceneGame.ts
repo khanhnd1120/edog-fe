@@ -72,6 +72,8 @@ export class SceneGame extends Component {
   scoreSmallSfx: AudioSource;
   @property({ type: AudioSource })
   scoreBigSfx: AudioSource;
+  @property({ type: Label })
+  stageLabel: Label;
 
   score: number;
   player: Node;
@@ -127,6 +129,9 @@ export class SceneGame extends Component {
   renderUI() {
     const serverObject = ColyseusManager.Instance().getServerObject().state;
     if (serverObject) {
+      serverObject.listen("stage", (stage: number) => {
+        this.stageLabel.string = `Day ${stage}`;
+      });
       serverObject.listen("gameState", (gameState: GameState) => {
         switch (gameState) {
           case GameState.GameOver:
