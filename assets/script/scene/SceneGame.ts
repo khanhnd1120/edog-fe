@@ -187,7 +187,7 @@ export class SceneGame extends Component {
           x: newX,
           y: newY,
           width: fishData.size * G.unit,
-          height: 3 * G.unit,
+          height: fishData.height * G.unit,
           serverObject: fishData,
         });
         this.gamePanel.addChild(fish);

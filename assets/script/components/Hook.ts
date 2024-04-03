@@ -57,7 +57,7 @@ export class Hook extends Component {
     });
   }
   update(dt: number) {
-    let s = 4 * dt;
+    let s = 6 * dt;
     s = Math.min(s, 1.0);
     let lerp = new Vec3(0, 0, 0);
     let t = Vec3.lerp<Vec3>(

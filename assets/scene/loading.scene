@@ -102,7 +102,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 960,
+      "x": 960.0000000000002,
       "y": 540,
       "z": 0
     },
@@ -269,9 +269,9 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "hostname": "fishing-paradise-dev.eragon.gg",
+    "hostname": "localhost",
     "port": 2567,
-    "useSSL": true,
+    "useSSL": false,
     "_id": "c6Nh++Up1Eu7/EKsnC57bH"
   },
   {
@@ -1797,8 +1797,8 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": 5.684341886080802e-14,
-    "_right": 5.684341886080802e-14,
+    "_left": 1.7053025658242404e-13,
+    "_right": 1.7053025658242404e-13,
     "_top": 5.684341886080802e-14,
     "_bottom": 5.684341886080802e-14,
     "_horizontalCenter": 0,

@@ -26,6 +26,8 @@ export class Fish extends Component {
   serverObject: any;
   x: number = 0;
   y: number = 0;
+  width: number = 0;
+  height: number = 0;
   isPulled: boolean = false;
 
   init({
@@ -65,8 +67,8 @@ export class Fish extends Component {
     this.y = this.convertPosToCenter(x, y).y;
     this.node.setPosition(this.x, this.y);
     // set width; height
-    this.node.getComponent(UITransform).width = width;
-    this.node.getComponent(UITransform).height = height;
+    this.width = boxUI.width;
+    this.height = boxUI.height;
     // set point pos
     this.point.setPosition(
       this.boxs[id].position.x,
@@ -103,7 +105,7 @@ export class Fish extends Component {
       this.node.setPosition(this.x, this.y);
       return;
     }
-    let s = 4 * dt;
+    let s = 6 * dt;
     s = Math.min(s, 1.0);
     let lerp = new Vec3(0, 0, 0);
     let t = Vec3.lerp<Vec3>(
@@ -121,26 +123,19 @@ export class Fish extends Component {
         x: x,
         y:
           y -
-          Math.abs(
-            this.node.getComponent(UITransform).height * this.node.scale.y
-          ) /
-            2,
+          Math.abs(this.height * this.node.scale.y) *
+            (1 - this.node.getComponent(UITransform).anchorPoint.y),
       };
     }
     return {
       x:
         x +
-        Math.abs(
-          this.node.getComponent(UITransform).height * this.node.scale.y
-        ) /
-          2,
+        Math.abs(this.width * this.node.scale.x) *
+          (1 - this.node.getComponent(UITransform).anchorPoint.x),
       y:
         y +
-        Math.abs(
-          this.node.getComponent(UITransform).height * this.node.scale.y
-        ) /
-          2 +
-        0.75 * G.unit,
+        Math.abs(this.height * this.node.scale.y) *
+          this.node.getComponent(UITransform).anchorPoint.y,
     };
   }
 }
