@@ -82,6 +82,9 @@ export class Fish extends Component {
     serverObject.listen("score", (score: number) => {
       this.pointLabel.string = `${score}`;
     });
+    serverObject.listen("isActive", (isActive: boolean) => {
+      this.node.active = isActive;
+    });
     serverObject.listen("isPulled", (isPulled: boolean) => {
       if (isPulled) {
         this.isPulled = isPulled;

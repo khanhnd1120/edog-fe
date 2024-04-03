@@ -13,6 +13,7 @@ const { ccclass, property } = _decorator;
 
 import Colyseus from "db://colyseus-sdk/colyseus.js";
 import { G } from "../script/G";
+import { DialogType } from "../script/shared/GameInterface";
 
 @ccclass("ColyseusManager")
 export class ColyseusManager extends Component {
@@ -127,7 +128,6 @@ export class ColyseusManager extends Component {
       log("joined Lobby successfully!");
       //log("user's sessionId:", this.lobby.sessionId);
       this.GetConfigs();
-      G.enterGame();
       this.lobby.onStateChange((state) => {
         log("onStateChange: ", JSON.stringify(state));
       });
@@ -145,6 +145,7 @@ export class ColyseusManager extends Component {
   private GetConfigs() {
     this.lobby.onMessage("get-config", (mess) => {
       G.config.setConfigData(mess);
+      this.isLoadConfig = true;
     });
     this.lobby.send("get-config");
   }

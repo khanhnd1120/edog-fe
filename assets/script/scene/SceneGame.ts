@@ -24,6 +24,7 @@ import { ColyseusManager } from "../../Libs/ColyseusManager";
 import { Fish } from "../components/Fish";
 import { Hook } from "../components/Hook";
 import { DialogEndGame } from "../dialogs/DialogEndGame";
+import { Player } from "../components/Player";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneGame")
@@ -219,10 +220,7 @@ export class SceneGame extends Component {
     const serverObject =
       ColyseusManager.Instance().getServerObject().state.hook;
     if (serverObject) {
-      serverObject.listen("center", ({ x, y }: { x: number; y: number }) => {
-        const { x: newX, y: newY } = G.convertPosition({ x, y });
-        player.setPosition(newX, newY);
-      });
+      this.player.getComponent(Player).init(serverObject);
     }
   }
   renderHook() {

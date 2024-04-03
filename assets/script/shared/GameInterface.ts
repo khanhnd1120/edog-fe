@@ -17,6 +17,8 @@ export enum Direction {
 
 export enum DialogType {
   DialogEndGame,
+  Instruct1,
+  Instruct2,
 }
 
 export enum GameState {

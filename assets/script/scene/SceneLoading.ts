@@ -2,6 +2,7 @@ import { _decorator, Component, director, Node } from "cc";
 import { G } from "../G";
 import { GameRoot } from "../shared/GameRoot";
 import { ColyseusManager } from "../../Libs/ColyseusManager";
+import { DialogType } from "../shared/GameInterface";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneLoading")
@@ -9,9 +10,10 @@ export class SceneLoading extends Component {
   @property(Node)
   gameRoot: Node = null;
   start() {
+    if (G.gameRoot) return;
     director.addPersistRootNode(this.gameRoot);
     Promise.all([this.initGlobal(), this.waitLoadConfig()]).then(() => {
-      //   G.enterHall();
+      G.gameRoot.showDialog(DialogType.Instruct1);
     });
   }
   async waitLoadConfig() {
