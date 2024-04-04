@@ -45,7 +45,8 @@ export class Player extends Component {
       if (mul > 0) {
         this.combo.active = true;
         this.comboLabel.string = `Combo X${mul}`;
-        this.comboCounter.getComponent(ProgressBar).progress = mul / 5;
+        this.comboCounter.getComponent(ProgressBar).progress =
+          mul / 10 > 0.5 ? 0.5 : mul / 10;
       } else {
         this.combo.active = false;
       }

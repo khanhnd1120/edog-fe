@@ -62,7 +62,6 @@ export class Fish extends Component {
       );
       this.point.setScale(-1, 1, 0);
     }
-    this.node.setPosition(x, y);
     this.x = this.convertPosToCenter(x, y).x;
     this.y = this.convertPosToCenter(x, y).y;
     this.node.setPosition(this.x, this.y);

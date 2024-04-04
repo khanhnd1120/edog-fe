@@ -370,7 +370,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 121.137,
+      "y": 101.367,
       "z": 0
     },
     "_lrot": {
@@ -642,7 +642,7 @@
       "y": 0
     },
     "_fillStart": 0,
-    "_fillRange": 0.1,
+    "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": null,
@@ -667,14 +667,14 @@
       "__id__": 24
     },
     "_mode": 2,
-    "_totalLength": 0,
-    "_progress": 1,
+    "_totalLength": 1,
+    "_progress": 0,
     "_reverse": false,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "1aUZjFG/tCorfqONHIXdMZ"
+    "fileId": "65n8UUM4tJzZCAeNIrXcQm"
   },
   {
     "__type__": "cc.PrefabInfo",
