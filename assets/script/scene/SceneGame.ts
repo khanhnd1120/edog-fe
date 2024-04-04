@@ -162,15 +162,16 @@ export class SceneGame extends Component {
           input.on(Input.EventType.KEY_DOWN, (event) => {
             switch (event.keyCode) {
               case KeyCode.SPACE:
-                ColyseusManager.Instance()
-                  .getServerObject()
-                  .send("on-tap", true);
+                this.onReleaseHook();
                 break;
             }
           });
         }
       });
     }
+  }
+  onReleaseHook() {
+    ColyseusManager.Instance().getServerObject().send("on-tap", true);
   }
   renderFish() {
     const serverObject =

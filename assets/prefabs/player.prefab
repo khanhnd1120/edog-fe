@@ -984,6 +984,10 @@
     "comboCounter": {
       "__id__": 21
     },
+    "rewardPrefab": {
+      "__uuid__": "09cd3365-8fbb-42bc-8b1f-7d06b5d6484b",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {

@@ -1,5 +1,15 @@
-import { _decorator, Component, Label, Node, ProgressBar, Vec3 } from "cc";
+import {
+  _decorator,
+  Component,
+  instantiate,
+  Label,
+  Node,
+  Prefab,
+  ProgressBar,
+  Vec3,
+} from "cc";
 import { G } from "../G";
+import { Reward } from "./Reward";
 const { ccclass, property } = _decorator;
 
 enum PlayerDirection {
@@ -16,6 +26,8 @@ export class Player extends Component {
   comboLabel: Label;
   @property({ type: Node })
   comboCounter: Node;
+  @property({ type: Prefab })
+  rewardPrefab: Prefab;
 
   rootPos: Vec3;
   nextPos: Vec3;
@@ -30,7 +42,6 @@ export class Player extends Component {
       this.rootPos.y + G.getRndInteger(this.minRange, this.maxRange)
     );
     this.direction = PlayerDirection.Up;
-    this.combo.active = false;
   }
 
   init(serverObject: any) {
@@ -42,15 +53,24 @@ export class Player extends Component {
 
     serverObject.listen("comboPoint", (comboPoint: number) => {
       const mul = Math.floor(comboPoint / 100);
-      if (mul > 0) {
-        this.combo.active = true;
-        this.comboLabel.string = `Combo X${mul}`;
-        this.comboCounter.getComponent(ProgressBar).progress =
-          mul / 10 > 0.5 ? 0.5 : mul / 10;
-      } else {
-        this.combo.active = false;
-      }
+      this.comboLabel.string = `Combo X${mul}`;
+      this.comboCounter.getComponent(ProgressBar).progress =
+        ((comboPoint % 100) / 100) * 0.5;
     });
+
+    serverObject.listen(
+      "lastReward",
+      (lastReward: { lastTotal: number; lastBonus: number }) => {
+        if (!lastReward) {
+          return;
+        }
+        const item = instantiate(this.rewardPrefab);
+        item
+          .getComponent(Reward)
+          .init({ total: lastReward.lastTotal, bonus: lastReward.lastBonus });
+        this.node.addChild(item);
+      }
+    );
   }
 
   update(dt: number) {
