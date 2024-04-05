@@ -9,9 +9,9 @@ export class DialogInstruct1 extends Component {
         this.node.active = true;
     }
     moveToInstruct2() {
-        G.gameRoot.showDialog(DialogType.Instruct2);
+        // G.gameRoot.showDialog(DialogType.Instruct2);
         G.gameRoot.hideDialog(DialogType.Instruct1);
-        this.node.active = false;
+        G.enterGame();
     }
 }
 
