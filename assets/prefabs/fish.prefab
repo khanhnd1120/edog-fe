@@ -2357,7 +2357,7 @@
     },
     "_premultipliedAlpha": true,
     "defaultSkin": 4,
-    "defaultAnimation": "",
+    "defaultAnimation": "idle",
     "_enableBatch": false,
     "_sockets": [],
     "_debugMesh": false,

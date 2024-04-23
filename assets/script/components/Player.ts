@@ -6,6 +6,7 @@ import {
   Node,
   Prefab,
   ProgressBar,
+  tween,
   Vec3,
 } from "cc";
 import { G } from "../G";
@@ -34,6 +35,7 @@ export class Player extends Component {
   minRange = 20;
   maxRange = 30;
   direction: PlayerDirection;
+  comboVal: number;
 
   start() {
     this.rootPos = this.node.position;
@@ -45,6 +47,7 @@ export class Player extends Component {
   }
 
   init(serverObject: any) {
+    this.comboVal = 0;
     if (!serverObject) return;
     serverObject.listen("center", ({ x, y }: { x: number; y: number }) => {
       const { x: newX, y: newY } = G.convertPosition({ x, y });
@@ -53,9 +56,80 @@ export class Player extends Component {
 
     serverObject.listen("comboPoint", (comboPoint: number) => {
       const mul = Math.floor(comboPoint / 100);
-      this.comboLabel.string = `Combo X${mul}`;
-      this.comboCounter.getComponent(ProgressBar).progress =
-        ((comboPoint % 100) / 100) * 0.5;
+      if (mul == this.comboVal) {
+        tween()
+          .target(this.comboCounter.getComponent(ProgressBar))
+          .to(
+            1.0 / (this.comboVal - mul + 1),
+            {
+              progress: ((comboPoint % 100) / 100) * 0.5,
+            },
+            {
+              onComplete: () => {
+                if (this.comboVal < mul) {
+                  this.comboCounter.getComponent(ProgressBar).progress = 0;
+                }
+                this.comboVal = mul;
+              },
+            }
+          )
+          .start();
+      } else {
+        let anim = (i: number, max: number, time: number) => {
+          console.log(this.comboVal, mul);
+          let to = ((comboPoint % 100) / 100) * 0.5;
+          if (i >= max) {
+            tween()
+              .target(this.comboCounter.getComponent(ProgressBar))
+              .to(0.2, {
+                progress: to,
+              })
+              .start();
+            return;
+          }
+          if (this.comboVal < mul) {
+            to = 0.5;
+          } else {
+            to = 0;
+          }
+          tween()
+            .target(this.comboCounter.getComponent(ProgressBar))
+            .to(
+              time,
+              {
+                progress: to,
+              },
+              {
+                onComplete: () => {
+                  if (this.comboVal < mul) {
+                    this.comboVal = this.comboVal + 1;
+                    this.comboCounter.getComponent(ProgressBar).progress = 0;
+                  } else if (this.comboVal > mul) {
+                    this.comboVal = this.comboVal - 1;
+                    this.comboCounter.getComponent(ProgressBar).progress = 0.5;
+                  }
+                  this.comboLabel.string = `Combo X${this.comboVal}`;
+                  tween()
+                    .target(this.comboLabel)
+                    .to(0.5, { fontSize: 30 * (1 + this.comboVal * 0.1) })
+                    .start();
+                  // this.comboLabel.fontSize = ;
+                  anim(i + 1, max, time);
+                },
+              }
+            )
+            .start();
+        };
+        anim(
+          0,
+          Math.abs(this.comboVal - mul),
+          1.0 / Math.abs(this.comboVal - mul)
+        );
+        for (let index = 0; index < Math.abs(this.comboVal - mul); index++) {
+          // setTimeout(() => {},
+          // ((i * 1.0) / Math.abs(this.comboVal - mul)) * 1000);
+        }
+      }
     });
 
     serverObject.listen(

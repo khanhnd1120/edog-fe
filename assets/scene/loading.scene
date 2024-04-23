@@ -327,9 +327,9 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "hostname": "localhost",
+    "hostname": "fishing-paradise-dev.eragon.gg",
     "port": 2567,
-    "useSSL": false,
+    "useSSL": true,
     "_id": "c6Nh++Up1Eu7/EKsnC57bH"
   },
   {
@@ -1394,7 +1394,7 @@
         "__id__": 38
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 41

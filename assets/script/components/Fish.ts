@@ -52,7 +52,7 @@ export class Fish extends Component {
     skeleton.defaultSkin = id;
     setTimeout(() => {
       skeleton.animation = "idle";
-    }, 10);
+    }, 20);
     const boxUI = this.boxs[id].getComponent(UITransform);
     if (direction == Direction.Left) {
       this.node.setScale(new Vec3(width / boxUI.width, width / boxUI.width, 1));

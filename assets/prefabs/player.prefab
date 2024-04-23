@@ -751,7 +751,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 187.8,
+      "width": 142.95,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -786,11 +786,11 @@
       "b": 5,
       "a": 255
     },
-    "_string": "Combo X5",
+    "_string": "Combo X0",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,

@@ -137,6 +137,10 @@ export class SceneGame extends Component {
         switch (gameState) {
           case GameState.GameOver:
             G.gameRoot.showDialog(DialogType.DialogEndGame);
+            setTimeout(() => {
+              window.top.postMessage('leaderboard', '*');
+              console.log("show leaderboard");
+            }, 5000);
             break;
         }
       });
