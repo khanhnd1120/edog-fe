@@ -111,7 +111,7 @@ export class Player extends Component {
                   this.comboLabel.string = `Combo X${this.comboVal}`;
                   tween()
                     .target(this.comboLabel)
-                    .to(0.5, { fontSize: 30 * (1 + this.comboVal * 0.1) })
+                    .to(0.5, { fontSize: 28 * (1 + this.comboVal * 0.1) })
                     .start();
                   // this.comboLabel.fontSize = ;
                   anim(i + 1, max, time);
