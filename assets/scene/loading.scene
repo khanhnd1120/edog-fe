@@ -327,7 +327,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "hostname": "fishing-paradise-dev.eragon.gg",
+    "hostname": "fishing-paradise-testnet-vm.eragon.gg",
     "port": 2567,
     "useSSL": true,
     "_id": "c6Nh++Up1Eu7/EKsnC57bH"

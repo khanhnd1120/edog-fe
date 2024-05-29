@@ -34,7 +34,6 @@ export class ColyseusManager extends Component {
   //#endregion
 
   //#region Inspector
-  @property({ type: CCString }) hostname: string = "localhost";
   @property({ type: CCInteger }) port: number = 2567;
   @property({ type: CCBoolean }) useSSL: boolean = false;
 
@@ -56,7 +55,7 @@ export class ColyseusManager extends Component {
     this.InitColyseus();
   }
 
-  update(deltaTime: number) { }
+  update(deltaTime: number) {}
   //#endregion
 
   //#region Lobby Methods
@@ -90,8 +89,12 @@ export class ColyseusManager extends Component {
     let token = sys.localStorage.getItem("access_token");
     let searchParams = new URLSearchParams(window.location.search);
     let poolID = searchParams.get("poolId");
+    let serverUrl = searchParams.get("logic_server_url");
     try {
-      this.game = await this.client.joinOrCreate(name, { pool_id: poolID, token: token });
+      this.game = await this.client.joinOrCreate(name, {
+        pool_id: poolID,
+        token: token,
+      });
       log(`join ${name} successfully!`);
       log("user's sessionId:", this.game.sessionId);
       callback(true, this.game);
@@ -112,8 +115,11 @@ export class ColyseusManager extends Component {
 
   //#region Colyseus Methods
   private InitColyseus(): void {
+    let searchParams = new URLSearchParams(window.location.search);
+    let serverUrl = searchParams.get("logic_server_url");
     this.client = new Colyseus.Client(
-      `${this.useSSL ? "wss" : "ws"}://${this.hostname}${[443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
+      `${this.useSSL ? "wss" : "ws"}://${serverUrl.replace("https://", "")}${
+        [443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
       }`
     );
 
