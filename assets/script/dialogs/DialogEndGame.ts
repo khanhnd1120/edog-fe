@@ -8,12 +8,18 @@ const { ccclass, property } = _decorator;
 export class DialogEndGame extends Component {
   @property({ type: Label })
   scoreLabel: Label;
+  @property({ type: Label })
+  aptLabel: Label;
 
-  init(score: string) {
+  setScore(score: string) {
     this.scoreLabel.string = score;
   }
 
-  onButtonHomClick() {
+  setAPTEarned(aptAmount: string) {
+    this.aptLabel.string = aptAmount;
+  }
+
+  onButtonReplayClick() {
     G.gameRoot.hideDialog(DialogType.DialogEndGame);
     director.loadScene("loading");
     G.gameRoot.showDialog(DialogType.Instruct1);

@@ -76,7 +76,6 @@ export class Player extends Component {
           .start();
       } else {
         let anim = (i: number, max: number, time: number) => {
-          console.log(this.comboVal, mul);
           let to = ((comboPoint % 100) / 100) * 0.5;
           if (i >= max) {
             tween()
@@ -111,7 +110,9 @@ export class Player extends Component {
                   this.comboLabel.string = `Combo X${this.comboVal}`;
                   tween()
                     .target(this.comboLabel)
-                    .to(0.5, { fontSize: 28 * (1 + this.comboVal * 0.1) })
+                    .to(0.5, {
+                      fontSize: Math.min(28 * (1 + this.comboVal * 0.1), 35),
+                    })
                     .start();
                   // this.comboLabel.fontSize = ;
                   anim(i + 1, max, time);

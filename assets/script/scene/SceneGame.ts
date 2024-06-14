@@ -25,6 +25,7 @@ import { Fish } from "../components/Fish";
 import { Hook } from "../components/Hook";
 import { DialogEndGame } from "../dialogs/DialogEndGame";
 import { Player } from "../components/Player";
+import { FishesCaught } from "../components/FishesCaught";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneGame")
@@ -49,6 +50,8 @@ export class SceneGame extends Component {
   scoreLabel: Label;
   @property({ type: Label })
   totalScoreLabel: Label;
+  @property({ type: Label })
+  totalAPTLabel: Label;
   @property({ type: Label })
   countdownLabel: Label;
   @property({ type: Node })
@@ -75,6 +78,12 @@ export class SceneGame extends Component {
   scoreBigSfx: AudioSource;
   @property({ type: Label })
   stageLabel: Label;
+  @property({ type: Node })
+  topLeftScreen: Node;
+  @property({ type: Node })
+  bottomRightScreen: Node;
+  @property({ type: FishesCaught })
+  fishesCaught: FishesCaught;
 
   score: number;
   player: Node;
@@ -88,6 +97,13 @@ export class SceneGame extends Component {
   };
 
   start() {
+    // screen size
+    G.screenHeight =
+      this.topLeftScreen.position.y - this.bottomRightScreen.position.y;
+    G.screenWidth =
+      this.bottomRightScreen.position.x - this.topLeftScreen.position.x;
+
+    // scene size
     const realWidth = this.bottomRight.position.x - this.topLeft.position.x;
     G.sceneWidth = realWidth;
     G.sceneHeight = this.topLeft.position.y - this.bottomRight.position.y;
@@ -128,6 +144,9 @@ export class SceneGame extends Component {
   }
 
   renderUI() {
+    G.FeatUIComponents.map((ui) => {
+      ui.init();
+    });
     const serverObject = ColyseusManager.Instance().getServerObject().state;
     if (serverObject) {
       serverObject.listen("stage", (stage: number) => {
@@ -138,7 +157,7 @@ export class SceneGame extends Component {
           case GameState.GameOver:
             G.gameRoot.showDialog(DialogType.DialogEndGame);
             setTimeout(() => {
-              window.top.postMessage('leaderboard', '*');
+              window.top.postMessage("leaderboard", "*");
               console.log("show leaderboard");
             }, 5000);
             break;
@@ -163,6 +182,7 @@ export class SceneGame extends Component {
           this.renderPlayer();
           this.renderHook();
           this.renderFish();
+          this.renderFishesCaught();
           input.on(Input.EventType.KEY_DOWN, (event) => {
             switch (event.keyCode) {
               case KeyCode.SPACE:
@@ -176,6 +196,13 @@ export class SceneGame extends Component {
   }
   onReleaseHook() {
     ColyseusManager.Instance().getServerObject().send("on-tap", true);
+  }
+  renderFishesCaught() {
+    const serverObject =
+      ColyseusManager.Instance().getServerObject().state.hook.historyFishes;
+    if (serverObject) {
+      this.fishesCaught.init({ serverObject });
+    }
   }
   renderFish() {
     const serverObject =
@@ -195,6 +222,7 @@ export class SceneGame extends Component {
           width: fishData.size * G.unit,
           height: fishData.height * G.unit,
           serverObject: fishData,
+          aptCoin: fishData.aptCoin,
         });
         this.gamePanel.addChild(fish);
         this.fishes[fishData.uid] = {
@@ -245,7 +273,14 @@ export class SceneGame extends Component {
         this.totalScoreLabel.string = `Total earned: ${score}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .init(`${score}`);
+          .setScore(`${score}`);
+      });
+      serverObject.listen("totalAptCoin", (apt: number) => {
+        let aptAmount = Math.floor(apt * 1000) / 1000;
+        this.totalAPTLabel.string = `APT earned: ${aptAmount}`;
+        G.gameRoot.dialogNodes[DialogType.DialogEndGame]
+          .getComponent(DialogEndGame)
+          .setAPTEarned(`${aptAmount} APT`);
       });
     }
   }

@@ -23,6 +23,8 @@ export class Fish extends Component {
   point: Node;
   @property({ type: [Node] })
   boxs: Node[] = [];
+  @property({ type: Node })
+  aptCoin: Node;
   serverObject: any;
   x: number = 0;
   y: number = 0;
@@ -38,6 +40,7 @@ export class Fish extends Component {
     height,
     serverObject,
     direction,
+    aptCoin = 0,
   }: {
     id: string;
     x: number;
@@ -46,6 +49,7 @@ export class Fish extends Component {
     height: number;
     serverObject: any;
     direction: Direction;
+    aptCoin?: number;
   }) {
     let skeleton = this.node.getComponent(sp.Skeleton);
     // @ts-ignore
@@ -72,6 +76,17 @@ export class Fish extends Component {
     this.point.setPosition(
       this.boxs[id].position.x,
       this.boxs[id].position.y + boxUI.height / 2
+    );
+    if (aptCoin && aptCoin > 0) {
+      this.aptCoin.active = true;
+      this.point.active = false;
+    } else {
+      this.aptCoin.active = false;
+      this.point.active = true;
+    }
+    this.aptCoin.setPosition(
+      this.boxs[id].position.x - boxUI.height / 2,
+      this.boxs[id].position.y + boxUI.height / 6
     );
     serverObject.listen("pos", ({ x, y }: { x: number; y: number }) => {
       const { x: newX, y: newY } = G.convertPosition({ x, y });

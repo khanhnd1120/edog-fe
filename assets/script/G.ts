@@ -3,6 +3,7 @@
 import { director, sys } from "cc";
 import { GameRoot } from "./shared/GameRoot";
 import { GameConfig } from "./shared/GameConfig";
+import { FeatUIPosition } from "./components/FeatUIPosition";
 export interface SettingData {
   music: number;
   sfx: number;
@@ -14,8 +15,13 @@ class GlobalInstance {
   public config: GameConfig = new GameConfig();
   public sceneWidth: number;
   public sceneHeight: number;
+  public screenWidth: number;
+  public screenHeight: number;
   public unit: number;
-  private constructor() {}
+  public FeatUIComponents: FeatUIPosition[];
+  private constructor() {
+    this.FeatUIComponents = [];
+  }
   setSetting(data: any) {
     let old = this.getSetting();
     sys.localStorage.setItem(

@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node } from "cc";
+import { _decorator, Animation, Component, Label, Node } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("Reward")
@@ -8,7 +8,16 @@ export class Reward extends Component {
   @property({ type: Label })
   labelBonus: Label;
 
-  init({ total, bonus }: { total: number; bonus: number }) {
+  init({
+    total,
+    bonus,
+    playOnLoad = true,
+  }: {
+    total: number;
+    bonus: number;
+    playOnLoad?: boolean;
+  }) {
+    this.node.getComponent(Animation).playOnLoad = playOnLoad;
     this.labelTotal.string = `+${total}`;
     if (bonus) {
       this.labelBonus.string = `( +${bonus} bonus )`;
