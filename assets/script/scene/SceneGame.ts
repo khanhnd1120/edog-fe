@@ -25,7 +25,6 @@ import { Fish } from "../components/Fish";
 import { Hook } from "../components/Hook";
 import { DialogEndGame } from "../dialogs/DialogEndGame";
 import { Player } from "../components/Player";
-import { FishesCaught } from "../components/FishesCaught";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneGame")
@@ -82,8 +81,6 @@ export class SceneGame extends Component {
   topLeftScreen: Node;
   @property({ type: Node })
   bottomRightScreen: Node;
-  @property({ type: FishesCaught })
-  fishesCaught: FishesCaught;
 
   score: number;
   player: Node;
@@ -182,7 +179,6 @@ export class SceneGame extends Component {
           this.renderPlayer();
           this.renderHook();
           this.renderFish();
-          this.renderFishesCaught();
           input.on(Input.EventType.KEY_DOWN, (event) => {
             switch (event.keyCode) {
               case KeyCode.SPACE:
@@ -197,13 +193,13 @@ export class SceneGame extends Component {
   onReleaseHook() {
     ColyseusManager.Instance().getServerObject().send("on-tap", true);
   }
-  renderFishesCaught() {
-    const serverObject =
-      ColyseusManager.Instance().getServerObject().state.hook.historyFishes;
-    if (serverObject) {
-      this.fishesCaught.init({ serverObject });
-    }
-  }
+  // renderFishesCaught() {
+  //   const serverObject =
+  //     ColyseusManager.Instance().getServerObject().state.hook.historyFishes;
+  //   if (serverObject) {
+  //     this.fishesCaught.init({ serverObject });
+  //   }
+  // }
   renderFish() {
     const serverObject =
       ColyseusManager.Instance().getServerObject().state.fishes;
@@ -223,6 +219,7 @@ export class SceneGame extends Component {
           height: fishData.height * G.unit,
           serverObject: fishData,
           aptCoin: fishData.aptCoin,
+          egonCoin: fishData.egonCoin,
         });
         this.gamePanel.addChild(fish);
         this.fishes[fishData.uid] = {

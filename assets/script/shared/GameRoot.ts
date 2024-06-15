@@ -1,5 +1,6 @@
 import { _decorator, Component, instantiate, Node, tween, Vec3 } from "cc";
 import { DialogType } from "./GameInterface";
+import { NewsManager } from "../news/NewsManager";
 const { ccclass, property } = _decorator;
 
 const START_POSITION: Vec3 = new Vec3(0, 100, 0);
@@ -11,6 +12,8 @@ export class GameRoot extends Component {
   dialogNodes: Node[] = [];
   @property({ type: Node })
   background: Node = null;
+  @property({ type: NewsManager })
+  newsManager: NewsManager = null;
   dialogBg: Node[] = [];
 
   start() {

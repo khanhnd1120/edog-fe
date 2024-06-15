@@ -25,6 +25,8 @@ export class Fish extends Component {
   boxs: Node[] = [];
   @property({ type: Node })
   aptCoin: Node;
+  @property({ type: Node })
+  egonCoin: Node;
   serverObject: any;
   x: number = 0;
   y: number = 0;
@@ -41,6 +43,7 @@ export class Fish extends Component {
     serverObject,
     direction,
     aptCoin = 0,
+    egonCoin = 0,
   }: {
     id: string;
     x: number;
@@ -50,6 +53,7 @@ export class Fish extends Component {
     serverObject: any;
     direction: Direction;
     aptCoin?: number;
+    egonCoin?: number;
   }) {
     let skeleton = this.node.getComponent(sp.Skeleton);
     // @ts-ignore
@@ -77,14 +81,25 @@ export class Fish extends Component {
       this.boxs[id].position.x,
       this.boxs[id].position.y + boxUI.height / 2
     );
-    if (aptCoin && aptCoin > 0) {
+    // icon coin
+    this.point.active = true;
+    this.aptCoin.active = false;
+    this.egonCoin.active = false;
+
+    if (aptCoin > 0) {
       this.aptCoin.active = true;
       this.point.active = false;
-    } else {
-      this.aptCoin.active = false;
-      this.point.active = true;
     }
+    if (egonCoin > 0) {
+      this.egonCoin.active = true;
+      this.point.active = false;
+    }
+
     this.aptCoin.setPosition(
+      this.boxs[id].position.x - boxUI.height / 2,
+      this.boxs[id].position.y + boxUI.height / 6
+    );
+    this.egonCoin.setPosition(
       this.boxs[id].position.x - boxUI.height / 2,
       this.boxs[id].position.y + boxUI.height / 6
     );
@@ -98,6 +113,22 @@ export class Fish extends Component {
     });
     serverObject.listen("isActive", (isActive: boolean) => {
       this.node.active = isActive;
+    });
+    serverObject.listen("aptCoin", (aptCoin: number) => {
+      if (aptCoin <= 0) {
+        this.aptCoin.active = false;
+      }
+      if(!this.egonCoin.active && !this.aptCoin.active) {
+        this.point.active = true;
+      }
+    });
+    serverObject.listen("egonCoin", (egonCoin: number) => {
+      if (egonCoin <= 0) {
+        this.egonCoin.active = false;
+      }
+      if(!this.egonCoin.active && !this.aptCoin.active) {
+        this.point.active = true;
+      }
     });
     serverObject.listen("isPulled", (isPulled: boolean) => {
       if (isPulled) {

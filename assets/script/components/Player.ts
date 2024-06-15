@@ -11,6 +11,7 @@ import {
 } from "cc";
 import { G } from "../G";
 import { Reward } from "./Reward";
+import { NewsType } from "../shared/GameInterface";
 const { ccclass, property } = _decorator;
 
 enum PlayerDirection {
@@ -135,7 +136,12 @@ export class Player extends Component {
 
     serverObject.listen(
       "lastReward",
-      (lastReward: { lastTotal: number; lastBonus: number }) => {
+      (lastReward: {
+        lastTotal: number;
+        lastBonus: number;
+        aptCoin: number;
+        egonCoin: number;
+      }) => {
         if (!lastReward) {
           return;
         }
@@ -144,6 +150,18 @@ export class Player extends Component {
           .getComponent(Reward)
           .init({ total: lastReward.lastTotal, bonus: lastReward.lastBonus });
         this.node.addChild(item);
+        if (lastReward.aptCoin) {
+          G.gameRoot.newsManager.showNews(
+            NewsType.CatchedAPT,
+            lastReward.aptCoin
+          );
+        }
+        if (lastReward.egonCoin) {
+          G.gameRoot.newsManager.showNews(
+            NewsType.CatchedEGON,
+            lastReward.egonCoin
+          );
+        }
       }
     );
   }

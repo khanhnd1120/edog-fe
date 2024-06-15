@@ -26,3 +26,10 @@ export enum GameState {
   Pending,
   GameOver,
 }
+
+export enum NewsType {
+  HighScore,
+  EarnAPT,
+  CatchedAPT,
+  CatchedEGON
+}
