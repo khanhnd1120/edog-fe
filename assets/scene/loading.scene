@@ -250,7 +250,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 959.9999999999999,
+    "_orthoHeight": 960,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -7001,7 +7001,7 @@
     "bg": {
       "__id__": 189
     },
-    "scene": "hall",
+    "scene": "quest",
     "index": 1,
     "tabManager": {
       "__id__": 185
@@ -7562,7 +7562,7 @@
     "bg": {
       "__id__": 205
     },
-    "scene": "loading",
+    "scene": "leaderboard",
     "index": 2,
     "tabManager": {
       "__id__": 185
@@ -8550,7 +8550,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 959.9999999999999,
+    "_orthoHeight": 960,
     "_near": 0,
     "_far": 1000,
     "_color": {

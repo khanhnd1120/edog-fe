@@ -24,6 +24,9 @@ export class GameRoot extends Component {
   }
 
   public hideDialog(type: DialogType) {
+    if (!this.dialogBg[type]) {
+      return;
+    }
     let node = this.dialogNodes[type];
     tween(node)
       .to(
@@ -34,6 +37,8 @@ export class GameRoot extends Component {
           onComplete: () => {
             node.active = false;
             this.dialogBg[type].destroy();
+            this.dialogBg[type] = null;
+            console.log({ type })
           },
         }
       )
@@ -64,5 +69,13 @@ export class GameRoot extends Component {
         }
       )
       .start();
+  }
+
+  public hideAllDialog() {
+    for (let item in DialogType) {
+      if (isNaN(Number(item))) {
+        this.hideDialog(Number(DialogType[item]))
+      }
+    }
   }
 }

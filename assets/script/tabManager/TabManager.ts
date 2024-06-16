@@ -16,7 +16,6 @@ export class TabManager extends Component {
     this.tabs.map((tab, index: number) => {
       if (index == this.tabActive) {
         tab.getComponent(Tab).setActive(true);
-        console.log({index})
       } else {
         tab.getComponent(Tab).setActive(false);
       }

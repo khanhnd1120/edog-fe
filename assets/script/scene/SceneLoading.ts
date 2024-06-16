@@ -10,7 +10,11 @@ export class SceneLoading extends Component {
   @property(Node)
   gameRoot: Node = null;
   start() {
-    if (G.gameRoot) return;
+    if (G.gameRoot) {
+      G.gameRoot.hideAllDialog();
+      G.gameRoot.showDialog(DialogType.Instruct1);
+      return;
+    }
     director.addPersistRootNode(this.gameRoot);
     Promise.all([this.initGlobal(), this.waitLoadConfig()]).then(() => {
       G.gameRoot.showDialog(DialogType.Instruct1);

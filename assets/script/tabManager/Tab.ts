@@ -30,7 +30,6 @@ export class Tab extends Component {
   }
 
   public onClick() {
-    console.log("aloooo", this.index)
     this.tabManager.toggle(this.index);
   }
 }
