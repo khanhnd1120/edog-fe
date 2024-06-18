@@ -2222,7 +2222,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -120,
+      "x": -116.974,
       "y": 0,
       "z": 0
     },
@@ -2260,7 +2260,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 81.11,
+      "width": 66.37,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -2292,8 +2292,8 @@
     "_string": "Target:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -2326,7 +2326,7 @@
     "_right": 116.80000000000001,
     "_top": -7.199999999999999,
     "_bottom": 0,
-    "_horizontalCenter": -79.445,
+    "_horizontalCenter": -83.789,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -2576,7 +2576,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -120,
+      "x": -116.974,
       "y": 0,
       "z": 0
     },
@@ -2614,7 +2614,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 90.97,
+      "width": 74.43,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -2646,8 +2646,8 @@
     "_string": "Current:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -2680,7 +2680,7 @@
     "_right": 48.620000000000005,
     "_top": -7.199999999999999,
     "_bottom": 0,
-    "_horizontalCenter": -74.515,
+    "_horizontalCenter": -79.759,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -3039,8 +3039,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -120,
-      "y": 3.552713678800501e-15,
+      "x": -116.974,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -3077,7 +3077,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 145.77,
+      "width": 119.27,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -3109,8 +3109,8 @@
     "_string": "Total earned:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -3141,9 +3141,9 @@
     "_target": null,
     "_left": 805.077,
     "_right": 48.620000000000005,
-    "_top": -7.200000000000003,
+    "_top": -7.199999999999999,
     "_bottom": 0,
-    "_horizontalCenter": -47.114999999999995,
+    "_horizontalCenter": -57.339000000000006,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -3393,8 +3393,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -120,
-      "y": -1.0658141036401503e-14,
+      "x": -116.974,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -3431,7 +3431,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133.36,
+      "width": 109.12,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -3463,8 +3463,8 @@
     "_string": "APT earned:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -3495,9 +3495,9 @@
     "_target": null,
     "_left": 805.077,
     "_right": 48.620000000000005,
-    "_top": -7.199999999999989,
+    "_top": -7.199999999999999,
     "_bottom": 0,
-    "_horizontalCenter": -53.31999999999999,
+    "_horizontalCenter": -62.414,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -3747,7 +3747,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -120,
+      "x": -116.974,
       "y": 0,
       "z": 0
     },
@@ -3785,7 +3785,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.92,
+      "width": 121.84,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -3817,8 +3817,8 @@
     "_string": "EGON earned:",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 22,
-    "_fontSize": 22,
+    "_actualFontSize": 18,
+    "_fontSize": 18,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
@@ -3847,7 +3847,7 @@
     "__prefab": null,
     "_alignFlags": 9,
     "_target": null,
-    "_left": -70,
+    "_left": -66.974,
     "_right": 48.620000000000005,
     "_top": -7.199999999999999,
     "_bottom": 0,

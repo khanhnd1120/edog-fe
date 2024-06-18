@@ -35,7 +35,11 @@ export enum NewsType {
 }
 
 export interface CustomerInfo {
+  id: number;
+  telegram_id: string;
   user_name: string;
+  first_name: string;
+  last_name: string;
   highest_score: number;
   high_score_day: number;
   wallet_address: string;

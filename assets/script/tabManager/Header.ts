@@ -19,7 +19,14 @@ export class Header extends Component {
     }
     G.dataStore.customerInfo$.subscribe((customerInfo: CustomerInfo) => {
       if (customerInfo) {
-        this.userId.string = `UserID: ${customerInfo.user_name}`;
+        let name = customerInfo.user_name;
+        if (!name) {
+          name = customerInfo.first_name + " " + customerInfo.last_name;
+        }
+        if (!name) {
+          name = customerInfo.telegram_id;
+        }
+        this.userId.string = `UserID: ${name}`;
         this.highScore.string = `HIGHSCORE:      ${customerInfo.highest_score}`;
       }
     });

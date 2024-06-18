@@ -30,19 +30,26 @@ export class LeaderboardItem extends Component {
     index: number;
     isMy?: boolean;
   }) {
-    if (index < 3) {
+    if (index != -1 && index < 3) {
       this.indexLabel.node.active = false;
       this.icon.spriteFrame = this.iconTop3[index];
     } else {
       this.icon.node.active = false;
-      this.indexLabel.string = `${index + 1}`;
+      this.indexLabel.string = `${index != -1 ? index + 1 : "10+"}`;
     }
     if (isMy) {
       this.bgItem.spriteFrame = this.bgMyItem;
     } else {
       this.bgItem.spriteFrame = this.bgNormal;
     }
-    this.nameLabel.string = customerInfo.user_name;
+    let name = customerInfo.user_name;
+    if (!name) {
+      name = customerInfo.first_name + " " + customerInfo.last_name;
+    }
+    if (!name) {
+      name = customerInfo.telegram_id;
+    }
+    this.nameLabel.string = name;
     this.pointLabel.string = `${customerInfo.high_score_day}`;
   }
 }

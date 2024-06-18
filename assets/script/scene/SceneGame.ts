@@ -155,10 +155,7 @@ export class SceneGame extends Component {
         switch (gameState) {
           case GameState.GameOver:
             G.gameRoot.showDialog(DialogType.DialogEndGame);
-            setTimeout(() => {
-              window.top.postMessage("leaderboard", "*");
-              console.log("show leaderboard");
-            }, 5000);
+            G.dataStore.refreshCustomerInfo();
             break;
         }
       });
@@ -166,7 +163,7 @@ export class SceneGame extends Component {
         this.onChangeRemainTime(remainTime);
       });
       serverObject.listen("requireScore", (requireScore: number) => {
-        this.requireScoreLabel.string = `Target: ${requireScore}`;
+        this.requireScoreLabel.string = `${requireScore}`;
       });
       serverObject.listen("startGame", (startGame: number) => {
         if (!startGame) {
@@ -266,27 +263,25 @@ export class SceneGame extends Component {
     this.hook = hook;
     if (serverObject) {
       serverObject.listen("score", (score: number) => {
-        this.scoreLabel.string = `Current: ${score}`;
+        this.scoreLabel.string = `${score}`;
       });
       serverObject.listen("totalScore", (score: number) => {
-        this.totalScoreLabel.string = `Total earned: ${score}`;
+        this.totalScoreLabel.string = `${score}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
           .setScore(`${score}`);
       });
       serverObject.listen("totalAptCoin", (apt: number) => {
-        let aptAmount = Math.floor(apt * 1000) / 1000;
-        this.totalAPTLabel.string = `${aptAmount}`;
+        this.totalAPTLabel.string = `${apt.toFixed(8)}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .setAPTEarned(`${aptAmount}`);
+          .setAPTEarned(`${apt.toFixed(8)}`);
       });
       serverObject.listen("totalEgonCoin", (egon: number) => {
-        let egonAmount = Math.floor(egon * 1000) / 1000;
-        this.totalEgonLabel.string = `${egonAmount}`;
+        this.totalEgonLabel.string = `${egon}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .setEgonEarned(`${egonAmount}`);
+          .setEgonEarned(`${egon}`);
       });
     }
   }

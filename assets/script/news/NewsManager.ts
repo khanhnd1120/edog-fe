@@ -13,6 +13,7 @@ export class NewsManager extends Component {
   currentNews: NewsType;
 
   currentDT = 0;
+  cooldownBlockJob = 0;
   indexNewsTypeShow = 0;
   start() {
     this.currentNews = NewsType.HighScore;
@@ -22,8 +23,24 @@ export class NewsManager extends Component {
         n.active = true;
       }
     });
+    setInterval(() => {
+      if (this.cooldownBlockJob > 0) {
+        this.cooldownBlockJob--;
+        return;
+      }
+      this.currentDT += 1;
+      if (this.currentDT > 3) {
+        this.currentDT = 0;
+        let pool = [NewsType.HighScore, NewsType.EarnAPT];
+        this.indexNewsTypeShow = (this.indexNewsTypeShow + 1) % pool.length;
+        this.showNews(pool[this.indexNewsTypeShow]);
+      }
+    }, 1000);
   }
   public showNews(type: NewsType, data?: any) {
+    if (![NewsType.HighScore, NewsType.EarnAPT].includes(type)) {
+      this.cooldownBlockJob = 3;
+    }
     this.currentDT = 0;
     if (this.newsNodes[this.currentNews]) {
       this.newsNodes[this.currentNews].active = false;
@@ -37,15 +54,6 @@ export class NewsManager extends Component {
       if (process && process.init) {
         process.init(data);
       }
-    }
-  }
-  update(dt: number) {
-    this.currentDT += dt;
-    if (this.currentDT > 3) {
-      this.currentDT = 0;
-      let pool = [NewsType.HighScore, NewsType.EarnAPT];
-      this.indexNewsTypeShow = (this.indexNewsTypeShow + 1) % pool.length;
-      this.showNews(pool[this.indexNewsTypeShow]);
     }
   }
 }

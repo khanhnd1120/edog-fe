@@ -55,10 +55,12 @@ export class QuestItem extends Component {
     switch (this.type) {
       case DailyQuestType.VisitLink:
         window.open(this.data.url, "_blank");
-        const { customerDailyQuestInfo } = await api.processQuest(this.id);
-        G.dataStore.customerDailyQuest$.next(customerDailyQuestInfo);
+        break;
+      case DailyQuestType.Referral:
         break;
     }
+    const { customerDailyQuestInfo } = await api.processQuest(this.id);
+    G.dataStore.customerDailyQuest$.next(customerDailyQuestInfo);
   }
   async onClaimClick() {
     const { customerDailyQuestInfo, dailyQuests } =

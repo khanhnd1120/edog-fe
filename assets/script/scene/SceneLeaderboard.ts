@@ -37,7 +37,13 @@ export class SceneLeaderboard extends Component {
       item.getComponent(LeaderboardItem).init({ customerInfo: info, index });
       this.items.push(item);
     });
-    this.myLeaderboard.init({ customerInfo, index: 0, isMy: true });
+    this.myLeaderboard.init({
+      customerInfo,
+      index: leaderboardInfos
+        .map((info: CustomerInfo) => info.id)
+        .indexOf(customerInfo.id),
+      isMy: true,
+    });
     setInterval(() => {
       this.updateCoolDown();
     }, 1000);
