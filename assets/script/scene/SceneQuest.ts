@@ -81,7 +81,7 @@ export class SceneQuest extends Component {
   }
 
   updateCoolDown() {
-    if (this.coolDown) {
+    if (this.coolDown && this.coolDownText) {
       this.coolDown -= 1;
       let hour = Math.floor(this.coolDown / 3600);
       let minute = Math.floor((this.coolDown - hour * 3600) / 60);
