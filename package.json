@@ -3,5 +3,8 @@
   "uuid": "1d1170f2-ef45-41f6-851d-d0c23245036d",
   "creator": {
     "version": "3.7.3"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.1"
   }
 }

@@ -10,6 +10,8 @@ export class DialogEndGame extends Component {
   scoreLabel: Label;
   @property({ type: Label })
   aptLabel: Label;
+  @property({ type: Label })
+  egonLabel: Label;
 
   setScore(score: string) {
     this.scoreLabel.string = score;
@@ -19,10 +21,12 @@ export class DialogEndGame extends Component {
     this.aptLabel.string = aptAmount;
   }
 
+  setEgonEarned(amount: string) {
+    this.egonLabel.string = amount;
+  }
+
   onButtonReplayClick() {
-    G.gameRoot.hideDialog(DialogType.DialogEndGame);
-    director.loadScene("loading");
-    G.gameRoot.showDialog(DialogType.Instruct1);
     ColyseusManager.Instance().EndGame();
+    director.loadScene("loading");
   }
 }

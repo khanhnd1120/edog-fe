@@ -36,7 +36,9 @@ export class GameRoot extends Component {
           easing: "backIn",
           onComplete: () => {
             node.active = false;
-            this.dialogBg[type].destroy();
+            if(this.dialogBg[type]) {
+              this.dialogBg[type].destroy();
+            }
             this.dialogBg[type] = null;
             console.log({ type })
           },

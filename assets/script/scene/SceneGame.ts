@@ -52,6 +52,8 @@ export class SceneGame extends Component {
   @property({ type: Label })
   totalAPTLabel: Label;
   @property({ type: Label })
+  totalEgonLabel: Label;
+  @property({ type: Label })
   countdownLabel: Label;
   @property({ type: Node })
   countdown: Node;
@@ -274,10 +276,17 @@ export class SceneGame extends Component {
       });
       serverObject.listen("totalAptCoin", (apt: number) => {
         let aptAmount = Math.floor(apt * 1000) / 1000;
-        this.totalAPTLabel.string = `APT earned: ${aptAmount}`;
+        this.totalAPTLabel.string = `${aptAmount}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .setAPTEarned(`${aptAmount} APT`);
+          .setAPTEarned(`${aptAmount}`);
+      });
+      serverObject.listen("totalEgonCoin", (egon: number) => {
+        let egonAmount = Math.floor(egon * 1000) / 1000;
+        this.totalEgonLabel.string = `${egonAmount}`;
+        G.gameRoot.dialogNodes[DialogType.DialogEndGame]
+          .getComponent(DialogEndGame)
+          .setEgonEarned(`${egonAmount}`);
       });
     }
   }

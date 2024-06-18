@@ -31,5 +31,26 @@ export enum NewsType {
   HighScore,
   EarnAPT,
   CatchedAPT,
-  CatchedEGON
+  CatchedEGON,
+}
+
+export interface CustomerInfo {
+  user_name: string;
+  highest_score: number;
+  high_score_day: number;
+  wallet_address: string;
+  apt_earned: number;
+  egon_earned: number;
+}
+
+export interface DailyQuestInfo {}
+
+export interface ConfigInfo {
+  contactTele: string;
+  contactX: string;
+}
+
+export enum DailyQuestType {
+  Referral,
+  VisitLink,
 }

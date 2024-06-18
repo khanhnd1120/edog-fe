@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "src/": "./assets/src/",
+    "rxjs": "./assets/script/lib/rxjs/index.ts"
+  }
+}

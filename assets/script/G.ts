@@ -4,6 +4,7 @@ import { director, sys } from "cc";
 import { GameRoot } from "./shared/GameRoot";
 import { GameConfig } from "./shared/GameConfig";
 import { FeatUIPosition } from "./components/FeatUIPosition";
+import { DataStore } from "./store/DataStore";
 export interface SettingData {
   music: number;
   sfx: number;
@@ -19,6 +20,9 @@ class GlobalInstance {
   public screenHeight: number;
   public unit: number;
   public FeatUIComponents: FeatUIPosition[];
+  public backendHost: string;
+  public dataStore: DataStore = new DataStore();
+
   private constructor() {
     this.FeatUIComponents = [];
   }

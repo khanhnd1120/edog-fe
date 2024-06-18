@@ -13,7 +13,7 @@ const { ccclass, property } = _decorator;
 
 import Colyseus from "db://colyseus-sdk/colyseus.js";
 import { G } from "../script/G";
-import { DialogType } from "../script/shared/GameInterface";
+import { DataStore } from "../script/store/DataStore";
 
 @ccclass("ColyseusManager")
 export class ColyseusManager extends Component {
@@ -86,13 +86,10 @@ export class ColyseusManager extends Component {
   public async OnJoinGame(callback: any) {
     const name = "gold-digger";
     log(`${this.TAG} JoinGame ${this.game}`);
-    let token = sys.localStorage.getItem("access_token");
     let searchParams = new URLSearchParams(window.location.search);
-    let poolID = searchParams.get("poolId");
-    let serverUrl = searchParams.get("logic_server_url");
+    let token = searchParams.get("token");
     try {
       this.game = await this.client.joinOrCreate(name, {
-        pool_id: poolID,
         token: token,
       });
       log(`join ${name} successfully!`);
@@ -118,10 +115,15 @@ export class ColyseusManager extends Component {
     let searchParams = new URLSearchParams(window.location.search);
     let serverUrl = searchParams.get("logic_server_url");
     this.client = new Colyseus.Client(
-      `${this.useSSL ? "wss" : "ws"}://${serverUrl.replace("https://", "")}${
+      `${this.useSSL ? "wss" : "ws"}://${serverUrl
+        .replace("https://", "")
+        .replace("http://", "")}${
         [443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
       }`
     );
+    G.backendHost = `${serverUrl}${
+      [443, 80].includes(this.port) || this.useSSL ? "" : `:${this.port}`
+    }`;
 
     // Connect into the lobby
     this.Connect();
@@ -141,6 +143,8 @@ export class ColyseusManager extends Component {
       this.lobby.onLeave((code) => {
         log("onLeave:", code);
       });
+      await G.dataStore.refreshCustomerInfo();
+      await G.dataStore.refreshConfigInfo();
     } catch (e) {
       error(`${this.TAG}${e}`);
     }
