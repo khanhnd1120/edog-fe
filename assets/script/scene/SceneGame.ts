@@ -84,6 +84,8 @@ export class SceneGame extends Component {
   @property({ type: Node })
   bottomRightScreen: Node;
 
+  totalAPT: number;
+  totalEGON: number;
   score: number;
   player: Node;
   hook: Node;
@@ -158,6 +160,13 @@ export class SceneGame extends Component {
             G.gameRoot.showDialog(DialogType.DialogEndGame);
             G.dataStore.refreshCustomerInfo();
             G.isPlaying = false;
+            if (
+              G.dataStore.customerInfo$.value &&
+              !G.dataStore.customerInfo$.value.wallet_address &&
+              (this.totalAPT || this.totalEGON)
+            ) {
+              G.gameRoot.showTutorial();
+            }
             break;
         }
       });
@@ -166,13 +175,6 @@ export class SceneGame extends Component {
       });
       serverObject.listen("requireScore", (requireScore: number) => {
         this.requireScoreLabel.string = `${requireScore}`;
-      });
-      serverObject.listen("isTut", (isTut: number) => {
-        if (isTut) {
-          G.gameRoot.showTutorial();
-        } else {
-          G.gameRoot.hideTutorial();
-        }
       });
       serverObject.listen("startGame", (startGame: number) => {
         if (!startGame) {
@@ -281,12 +283,14 @@ export class SceneGame extends Component {
           .setScore(`${score}`);
       });
       serverObject.listen("totalAptCoin", (apt: number) => {
+        this.totalAPT = apt;
         this.totalAPTLabel.string = `${apt > 0 ? Number(apt.toFixed(8)) : apt}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
           .setAPTEarned(`${apt > 0 ? Number(apt.toFixed(8)) : apt}`);
       });
       serverObject.listen("totalEgonCoin", (egon: number) => {
+        this.totalEGON = egon;
         this.totalEgonLabel.string = `${
           egon > 0 ? Number(egon.toFixed(5)) : egon
         }`;

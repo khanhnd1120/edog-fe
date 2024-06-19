@@ -45,6 +45,9 @@ export class SceneQuest extends Component {
         if (questData) {
           switch (questData.type) {
             case DailyQuestType.Referral:
+              if (customerDailyQuestInfo.number_rewards[index] > 0) {
+                canClaim = true;
+              }
               break;
             case DailyQuestType.VisitLink:
               if (customerDailyQuestInfo.claimed_ids.includes(questId)) {

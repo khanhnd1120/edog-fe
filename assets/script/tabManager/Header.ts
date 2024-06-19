@@ -27,7 +27,7 @@ export class Header extends Component {
           name = customerInfo.telegram_id;
         }
         this.userId.string = `UserID: ${name}`;
-        this.highScore.string = `HIGHSCORE:      ${customerInfo.highest_score}`;
+        this.highScore.string = `HIGHSCORE:      ${customerInfo.high_score_day}`;
       }
     });
   }

@@ -19,6 +19,7 @@ export enum DialogType {
   DialogEndGame,
   Instruct1,
   Instruct2,
+  ClaimQuest,
 }
 
 export enum GameState {
@@ -45,6 +46,7 @@ export interface CustomerInfo {
   wallet_address: string;
   apt_earned: number;
   egon_earned: number;
+  invite_link: string;
 }
 
 export interface DailyQuestInfo {}
@@ -52,6 +54,8 @@ export interface DailyQuestInfo {}
 export interface ConfigInfo {
   contactTele: string;
   contactX: string;
+  rule: string;
+  exploreMore: string;
 }
 
 export enum DailyQuestType {

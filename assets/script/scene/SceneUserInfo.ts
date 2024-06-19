@@ -49,4 +49,10 @@ export class SceneUserInfo extends Component {
   openContactX() {
     window.open(G.dataStore.config$.value.contactX, "_blank");
   }
+  openRule() {
+    window.open(G.dataStore.config$.value.rule, "_blank");
+  }
+  openExploreMore() {
+    window.open(G.dataStore.config$.value.exploreMore, "_blank");
+  }
 }

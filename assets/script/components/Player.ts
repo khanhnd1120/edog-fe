@@ -38,7 +38,6 @@ export class Player extends Component {
   maxRange = 30;
   direction: PlayerDirection;
   comboVal: number;
-  isTut: boolean = false;
 
   start() {
     this.rootPos = this.node.position;
@@ -163,17 +162,6 @@ export class Player extends Component {
             NewsType.CatchedEGON,
             Number(lastReward.egonCoin.toFixed(5))
           );
-        }
-        if (
-          !this.isTut &&
-          G.dataStore.customerInfo$.value &&
-          !G.dataStore.customerInfo$.value.wallet_address &&
-          (lastReward.egonCoin || lastReward.aptCoin)
-        ) {
-          this.isTut = true;
-          ColyseusManager.Instance()
-            .getServerObject()
-            .send("on-tut", { isTut: true });
         }
       }
     );
