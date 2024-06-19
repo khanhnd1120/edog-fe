@@ -1,0 +1,196 @@
+{
+"skeleton": {
+	"hash": "xbfQ2PX/AfcgebTjeAR9AW0dFEc",
+	"spine": "3.8.99",
+	"x": -14.4,
+	"y": -6.15,
+	"width": 143,
+	"height": 122,
+	"images": "./images/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "Control_all", "parent": "root" },
+	{
+		"name": "pointer",
+		"parent": "Control_all",
+		"length": 86.64,
+		"rotation": -143.92,
+		"x": 104.95,
+		"y": 107.56,
+		"color": "ff0000ff"
+	},
+	{ "name": "pointer2", "parent": "pointer", "length": 59.93, "rotation": 20.5, "x": 86.64, "color": "ff0000ff" },
+	{ "name": "FX_core_scale", "parent": "Control_all" },
+	{ "name": "Core_rotate", "parent": "FX_core_scale" },
+	{ "name": "FX_core_scale2", "parent": "Control_all" },
+	{ "name": "Core_rotate2", "parent": "FX_core_scale2" },
+	{ "name": "FX_core_scale3", "parent": "Control_all" },
+	{ "name": "Core_rotate3", "parent": "FX_core_scale3" }
+],
+"slots": [
+	{ "name": "Ellipse 1", "bone": "Core_rotate", "blend": "additive" },
+	{ "name": "Ellipse 1 copy", "bone": "Core_rotate2" },
+	{ "name": "Ellipse 1 copy2", "bone": "Core_rotate3" },
+	{ "name": "pointer", "bone": "pointer", "attachment": "pointer" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Ellipse 1": {
+				"Ellipse 1": { "width": 51, "height": 51 }
+			},
+			"Ellipse 1 copy": {
+				"Ellipse 1 copy": { "width": 126, "height": 126 }
+			},
+			"Ellipse 1 copy2": {
+				"Ellipse 1 copy": { "width": 126, "height": 126 }
+			},
+			"pointer": {
+				"pointer": {
+					"type": "mesh",
+					"uvs": [ 1, 0.39192, 0.91906, 0.49773, 0.89069, 0.79246, 0.6438, 0.88015, 0.4395, 0.88015, 0.36954, 0.83423, 0.32756, 0.92608, 0.23427, 1, 0, 1, 0, 0.80153, 0.08088, 0.6519, 0.0912, 0.50679, 0.17115, 0.35716, 0.40713, 0.11986, 0.49481, 0, 1, 0, 0.30925, 0.58951 ],
+					"triangles": [ 10, 6, 7, 7, 8, 9, 7, 9, 10, 6, 10, 5, 5, 10, 16, 16, 4, 5, 10, 11, 16, 11, 12, 16, 3, 4, 16, 1, 2, 3, 1, 3, 16, 16, 13, 1, 16, 12, 13, 13, 14, 1, 1, 14, 0, 14, 15, 0 ],
+					"vertices": [ 2, 2, 4.16, 45.87, 0.99971, 3, -61.2, 71.85, 2.9E-4, 2, 2, 21.11, 49.49, 0.9892, 3, -44.05, 69.3, 0.0108, 1, 2, 45.57, 76.16, 1, 1, 2, 80.4, 64.02, 1, 2, 2, 104.01, 46.82, 0.909, 3, 32.67, 37.77, 0.091, 2, 2, 108.8, 36.4, 0.18068, 3, 33.5, 26.33, 0.81932, 2, 2, 120.25, 41.92, 0.03916, 3, 46.16, 27.49, 0.96084, 2, 2, 136.34, 41.35, 0.00271, 3, 61.04, 21.33, 0.99729, 1, 3, 79.49, -6.63, 1, 1, 3, 59.28, -19.97, 1, 1, 3, 37.67, -20.37, 1, 2, 2, 117.45, -19.33, 0.02404, 3, 22.09, -28.89, 0.97596, 2, 2, 97.46, -27.35, 0.3754, 3, 0.55, -29.41, 0.6246, 1, 2, 53.14, -30.88, 1, 1, 2, 34.39, -35.31, 1, 1, 2, -24, 7.23, 1, 2, 2, 98.19, 7.19, 0.34598, 3, 13.33, 2.69, 0.65402 ],
+					"hull": 16,
+					"edges": [ 14, 16, 14, 12, 12, 10, 10, 8, 8, 6, 6, 4, 4, 2, 0, 30, 2, 0, 28, 30, 28, 26, 26, 24, 24, 22, 22, 20, 16, 18, 20, 18, 10, 32 ],
+					"width": 143,
+					"height": 122
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"Click": {
+		"slots": {
+			"Ellipse 1": {
+				"color": [
+					{ "time": 0.2667, "color": "ffffffff", "curve": 0.691, "c3": 0.674 },
+					{ "time": 0.9333, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.2667, "name": "Ellipse 1" }
+				]
+			},
+			"Ellipse 1 copy": {
+				"color": [
+					{ "time": 0.3333, "color": "ffffffff", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.8, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.3333, "name": "Ellipse 1 copy" }
+				]
+			},
+			"Ellipse 1 copy2": {
+				"color": [
+					{ "time": 0.4333, "color": "ffffffff", "curve": 0.59, "c3": 0.75 },
+					{ "time": 0.9667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.4333, "name": "Ellipse 1 copy" }
+				]
+			}
+		},
+		"bones": {
+			"pointer": {
+				"rotate": [
+					{ "angle": -20.69, "curve": 0.431, "c3": 0.579 },
+					{ "time": 0.3 }
+				],
+				"translate": [
+					{ "x": 23.44, "y": 39.07, "curve": 0.535, "c3": 0.713 },
+					{ "time": 0.3 }
+				]
+			},
+			"Core_rotate": {
+				"scale": [
+					{ "time": 0.2667, "y": 0.651, "curve": 0.317, "c3": 0.426 },
+					{ "time": 1, "x": 3.482, "y": 2.266 }
+				]
+			},
+			"FX_core_scale2": {
+				"scale": [
+					{ "time": 0.3333, "x": 0.253, "y": 0.173, "curve": 0.301, "c3": 0.614 },
+					{ "time": 0.8667, "x": 2.143, "y": 1.488 }
+				]
+			},
+			"FX_core_scale3": {
+				"scale": [
+					{ "time": 0.4333, "x": 0.837, "y": 0.567, "curve": 0.452, "c3": 0.548 },
+					{ "time": 1, "x": 1.976, "y": 1.339 }
+				]
+			}
+		}
+	},
+	"Hold": {
+		"slots": {
+			"Ellipse 1": {
+				"color": [
+					{ "color": "ffffffff", "curve": 0.691, "c3": 0.674 },
+					{ "time": 0.6667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "Ellipse 1" }
+				]
+			},
+			"Ellipse 1 copy": {
+				"color": [
+					{ "time": 0.0667, "color": "ffffffff", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5333, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.0667, "name": "Ellipse 1 copy" }
+				]
+			},
+			"Ellipse 1 copy2": {
+				"color": [
+					{ "time": 0.1667, "color": "ffffffff", "curve": 0.59, "c3": 0.75 },
+					{ "time": 0.7, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.1667, "name": "Ellipse 1 copy" }
+				]
+			}
+		},
+		"bones": {
+			"Core_rotate": {
+				"scale": [
+					{ "y": 0.651, "curve": 0.317, "c3": 0.426 },
+					{ "time": 0.7333, "x": 3.482, "y": 2.266 }
+				]
+			},
+			"FX_core_scale2": {
+				"scale": [
+					{ "time": 0.0667, "x": 0.253, "y": 0.173, "curve": 0.301, "c3": 0.614 },
+					{ "time": 0.6, "x": 2.143, "y": 1.488 }
+				]
+			},
+			"FX_core_scale3": {
+				"scale": [
+					{ "time": 0.1667, "x": 0.837, "y": 0.567, "curve": 0.452, "c3": 0.548 },
+					{ "time": 0.7333, "x": 1.976, "y": 1.339 }
+				]
+			}
+		}
+	},
+	"Reverse": {
+		"bones": {
+			"pointer": {
+				"rotate": [
+					{ "curve": 0.394, "c3": 0.624 },
+					{ "time": 0.2667, "angle": -21.5, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "angle": -20.69 }
+				],
+				"translate": [
+					{ "curve": 0.21, "c3": 0.581 },
+					{ "time": 0.2667, "x": 23.44, "y": 40.33, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4, "x": 23.44, "y": 39.07 }
+				]
+			}
+		}
+	}
+}
+}

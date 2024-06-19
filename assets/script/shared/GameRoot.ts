@@ -14,6 +14,8 @@ export class GameRoot extends Component {
   background: Node = null;
   @property({ type: NewsManager })
   newsManager: NewsManager = null;
+  @property({ type: Node })
+  tutorial: Node = null;
   dialogBg: Node[] = [];
 
   start() {
@@ -21,6 +23,14 @@ export class GameRoot extends Component {
     this.dialogNodes.forEach((n: Node) => {
       n.active = false;
     });
+  }
+
+  public showTutorial() {
+    this.tutorial.active = true;
+  }
+
+  public hideTutorial() {
+    this.tutorial.active = false;
   }
 
   public hideDialog(type: DialogType) {
@@ -36,11 +46,11 @@ export class GameRoot extends Component {
           easing: "backIn",
           onComplete: () => {
             node.active = false;
-            if(this.dialogBg[type]) {
+            if (this.dialogBg[type]) {
               this.dialogBg[type].destroy();
             }
             this.dialogBg[type] = null;
-            console.log({ type })
+            console.log({ type });
           },
         }
       )
@@ -76,7 +86,7 @@ export class GameRoot extends Component {
   public hideAllDialog() {
     for (let item in DialogType) {
       if (isNaN(Number(item))) {
-        this.hideDialog(Number(DialogType[item]))
+        this.hideDialog(Number(DialogType[item]));
       }
     }
   }

@@ -12,6 +12,7 @@ import {
 import { G } from "../G";
 import { Reward } from "./Reward";
 import { NewsType } from "../shared/GameInterface";
+import { ColyseusManager } from "../../Libs/ColyseusManager";
 const { ccclass, property } = _decorator;
 
 enum PlayerDirection {
@@ -37,6 +38,7 @@ export class Player extends Component {
   maxRange = 30;
   direction: PlayerDirection;
   comboVal: number;
+  isTut: boolean = false;
 
   start() {
     this.rootPos = this.node.position;
@@ -153,14 +155,25 @@ export class Player extends Component {
         if (lastReward.aptCoin) {
           G.gameRoot.newsManager.showNews(
             NewsType.CatchedAPT,
-            lastReward.aptCoin
+            Number(lastReward.aptCoin.toFixed(8))
           );
         }
         if (lastReward.egonCoin) {
           G.gameRoot.newsManager.showNews(
             NewsType.CatchedEGON,
-            lastReward.egonCoin
+            Number(lastReward.egonCoin.toFixed(5))
           );
+        }
+        if (
+          !this.isTut &&
+          G.dataStore.customerInfo$.value &&
+          !G.dataStore.customerInfo$.value.wallet_address &&
+          (lastReward.egonCoin || lastReward.aptCoin)
+        ) {
+          this.isTut = true;
+          ColyseusManager.Instance()
+            .getServerObject()
+            .send("on-tut", { isTut: true });
         }
       }
     );

@@ -96,6 +96,7 @@ export class SceneGame extends Component {
   };
 
   start() {
+    G.isPlaying = true;
     // screen size
     G.screenHeight =
       this.topLeftScreen.position.y - this.bottomRightScreen.position.y;
@@ -156,6 +157,7 @@ export class SceneGame extends Component {
           case GameState.GameOver:
             G.gameRoot.showDialog(DialogType.DialogEndGame);
             G.dataStore.refreshCustomerInfo();
+            G.isPlaying = false;
             break;
         }
       });
@@ -164,6 +166,13 @@ export class SceneGame extends Component {
       });
       serverObject.listen("requireScore", (requireScore: number) => {
         this.requireScoreLabel.string = `${requireScore}`;
+      });
+      serverObject.listen("isTut", (isTut: number) => {
+        if (isTut) {
+          G.gameRoot.showTutorial();
+        } else {
+          G.gameRoot.hideTutorial();
+        }
       });
       serverObject.listen("startGame", (startGame: number) => {
         if (!startGame) {
@@ -272,16 +281,18 @@ export class SceneGame extends Component {
           .setScore(`${score}`);
       });
       serverObject.listen("totalAptCoin", (apt: number) => {
-        this.totalAPTLabel.string = `${apt.toFixed(8)}`;
+        this.totalAPTLabel.string = `${apt > 0 ? Number(apt.toFixed(8)) : apt}`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .setAPTEarned(`${apt.toFixed(8)}`);
+          .setAPTEarned(`${apt > 0 ? Number(apt.toFixed(8)) : apt}`);
       });
       serverObject.listen("totalEgonCoin", (egon: number) => {
-        this.totalEgonLabel.string = `${egon}`;
+        this.totalEgonLabel.string = `${
+          egon > 0 ? Number(egon.toFixed(5)) : egon
+        }`;
         G.gameRoot.dialogNodes[DialogType.DialogEndGame]
           .getComponent(DialogEndGame)
-          .setEgonEarned(`${egon}`);
+          .setEgonEarned(`${egon > 0 ? Number(egon.toFixed(5)) : egon}`);
       });
     }
   }

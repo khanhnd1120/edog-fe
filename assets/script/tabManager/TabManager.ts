@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from "cc";
 import { Tab } from "./Tab";
+import { G } from "../G";
 const { ccclass, property } = _decorator;
 
 @ccclass("TabManager")
@@ -10,7 +11,7 @@ export class TabManager extends Component {
   tabActive: number;
 
   start() {
-    this.tabActive = 0
+    this.tabActive = 0;
   }
   refresh() {
     this.tabs.map((tab, index: number) => {
@@ -22,6 +23,7 @@ export class TabManager extends Component {
     });
   }
   public toggle(val: number) {
+    if (G.isPlaying) return;
     if (val == this.tabActive) return;
     this.tabActive = val;
     this.refresh();

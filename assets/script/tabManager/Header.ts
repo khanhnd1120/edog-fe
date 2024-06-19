@@ -33,6 +33,7 @@ export class Header extends Component {
   }
 
   onBtnShowInfoClick() {
+    if (G.isPlaying) return;
     director.loadScene("userinfo");
     this.navbar.toggle(-1);
   }

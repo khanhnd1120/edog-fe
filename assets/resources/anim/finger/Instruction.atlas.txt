@@ -1,0 +1,27 @@
+
+Instruction.png
+size: 332,132
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ellipse 1
+  rotate: false
+  xy: 278, 78
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+Ellipse 1 copy
+  rotate: false
+  xy: 149, 3
+  size: 126, 126
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 3, 7
+  size: 143, 122
+  orig: 143, 122
+  offset: 0, 0
+  index: -1
