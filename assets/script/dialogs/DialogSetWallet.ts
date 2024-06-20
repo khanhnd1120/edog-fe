@@ -13,7 +13,7 @@ export class DialogSetWallet extends Component {
 
   start() {
     this.inputAddress.string = `${
-      G.dataStore.customerInfo$.value.wallet_address ?? "Enter Wallet Here..."
+      G.dataStore.customerInfo$.value.wallet_address ?? ""
     }`;
     this.errNode.active = false;
   }
@@ -35,7 +35,7 @@ export class DialogSetWallet extends Component {
       G.gameRoot.hideDialog(DialogType.SetWallet);
     } catch (e) {
       this.inputAddress.string = `${
-        G.dataStore.customerInfo$.value.wallet_address ?? "Enter Wallet Here..."
+        G.dataStore.customerInfo$.value.wallet_address ?? ""
       }`;
       G.gameRoot.hideDialog(DialogType.SetWallet);
     }

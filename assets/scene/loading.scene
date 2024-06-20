@@ -6978,7 +6978,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -381.942,
-      "y": -72.754,
+      "y": -82.517,
       "z": 0
     },
     "_lrot": {
@@ -7015,8 +7015,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 266.6,
-      "height": 50.4
+      "width": 739.213,
+      "height": 67.8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -7044,14 +7044,14 @@
       "b": 0,
       "a": 255
     },
-    "_string": "At least 64 characters",
+    "_string": "This is not the Aptos wallet address, please use the correct Aptos wallet address",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 25,
     "_fontSize": 25,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
-    "_overflow": 0,
+    "_lineHeight": 30,
+    "_overflow": 3,
     "_enableWrapText": false,
     "_font": {
       "__uuid__": "fba6b238-3cc2-49fd-ac0d-0bd5f1b36370",
@@ -7082,7 +7082,7 @@
     "_top": 16.206086538461538,
     "_bottom": 0,
     "_horizontalCenter": 0,
-    "_verticalCenter": -72.754,
+    "_verticalCenter": -82.517,
     "_isAbsLeft": true,
     "_isAbsRight": true,
     "_isAbsTop": true,
