@@ -8,11 +8,14 @@ const { ccclass, property } = _decorator;
 export class DialogSetWallet extends Component {
   @property({ type: EditBox })
   inputAddress: EditBox;
+  @property({ type: Node })
+  errNode: Node;
 
   start() {
     this.inputAddress.string = `${
       G.dataStore.customerInfo$.value.wallet_address ?? "Enter Wallet Here..."
     }`;
+    this.errNode.active = false;
   }
   async onEditWallet() {
     try {
@@ -20,6 +23,11 @@ export class DialogSetWallet extends Component {
         G.gameRoot.hideDialog(DialogType.SetWallet);
         return;
       }
+      if (this.inputAddress.string.length < 64) {
+        this.errNode.active = true;
+        return;
+      }
+      this.errNode.active = false;
       const { customerInfo } = await api.setWalletAddress(
         this.inputAddress.string
       );
