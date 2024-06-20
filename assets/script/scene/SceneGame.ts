@@ -158,7 +158,9 @@ export class SceneGame extends Component {
         switch (gameState) {
           case GameState.GameOver:
             G.gameRoot.showDialog(DialogType.DialogEndGame);
-            G.dataStore.refreshCustomerInfo();
+            setTimeout(() => {
+              G.dataStore.refreshCustomerInfo();
+            }, 1000);
             G.isPlaying = false;
             if (
               G.dataStore.customerInfo$.value &&

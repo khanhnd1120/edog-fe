@@ -20,6 +20,7 @@ export enum DialogType {
   Instruct1,
   Instruct2,
   ClaimQuest,
+  SetWallet,
 }
 
 export enum GameState {

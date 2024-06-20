@@ -1,13 +1,13 @@
 import { _decorator, Component, EditBox, Label, Node } from "cc";
 import { G } from "../G";
-import { CustomerInfo } from "../shared/GameInterface";
+import { CustomerInfo, DialogType } from "../shared/GameInterface";
 import api from "../shared/API";
 const { ccclass, property } = _decorator;
 
 @ccclass("SceneUserInfo")
 export class SceneUserInfo extends Component {
-  @property({ type: EditBox })
-  inputAddress: EditBox;
+  @property({ type: Label })
+  addressLabel: Label;
   @property({ type: Label })
   aptEarnedLabel: Label;
   @property({ type: Label })
@@ -21,8 +21,10 @@ export class SceneUserInfo extends Component {
       return;
     }
     G.dataStore.customerInfo$.subscribe((customerInfo: CustomerInfo) => {
-      if (customerInfo && this.inputAddress) {
-        this.inputAddress.string = `${customerInfo.wallet_address ?? ""}`;
+      if (customerInfo && this.addressLabel) {
+        this.addressLabel.string = `${
+          customerInfo.wallet_address ?? "Enter Wallet Here..."
+        }`;
         this.aptEarnedLabel.string = `${customerInfo.apt_earned ?? 0}`;
         this.egonEarnedLabel.string = `${customerInfo.egon_earned ?? 0}`;
       }
@@ -31,16 +33,7 @@ export class SceneUserInfo extends Component {
   }
 
   async onEditWallet() {
-    try {
-      const { customerInfo } = await api.setWalletAddress(
-        this.inputAddress.string
-      );
-      G.dataStore.customerInfo$.next(customerInfo);
-    } catch (e) {
-      this.inputAddress.string = `${
-        G.dataStore.customerInfo$.value.wallet_address ?? ""
-      }`;
-    }
+    G.gameRoot.showDialog(DialogType.SetWallet);
   }
 
   openContactTele() {

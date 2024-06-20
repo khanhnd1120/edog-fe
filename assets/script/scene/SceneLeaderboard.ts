@@ -22,7 +22,7 @@ export class SceneLeaderboard extends Component {
   async start() {
     if (!G.gameRoot) return;
     G.gameRoot.hideAllDialog();
-    const { leaderboardInfos, customerInfo, cooldown } =
+    const { leaderboardInfos, customerInfo, cooldown, rewards } =
       await api.getLeaderboards();
     this.coolDown = cooldown;
     if (this.items) {
@@ -34,15 +34,19 @@ export class SceneLeaderboard extends Component {
     leaderboardInfos.map((info: CustomerInfo, index: number) => {
       let item = instantiate(this.leaderboardItem);
       this.leaderboardContent.addChild(item);
-      item.getComponent(LeaderboardItem).init({ customerInfo: info, index });
+      item
+        .getComponent(LeaderboardItem)
+        .init({ customerInfo: info, index, reward: rewards[index] });
       this.items.push(item);
     });
+    let myIndex = leaderboardInfos
+      .map((info: CustomerInfo) => info.id)
+      .indexOf(customerInfo.id);
     this.myLeaderboard.init({
       customerInfo,
-      index: leaderboardInfos
-        .map((info: CustomerInfo) => info.id)
-        .indexOf(customerInfo.id),
+      index: myIndex,
       isMy: true,
+      reward: rewards[myIndex] ?? 0,
     });
     setInterval(() => {
       this.updateCoolDown();

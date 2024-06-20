@@ -18,16 +18,20 @@ export class LeaderboardItem extends Component {
   nameLabel: Label;
   @property({ type: Label })
   pointLabel: Label;
+  @property({ type: Label })
+  rewardLabel: Label;
   @property({ type: Sprite })
   bgItem: Sprite;
 
   init({
     customerInfo,
     index,
+    reward,
     isMy = false,
   }: {
     customerInfo: CustomerInfo;
     index: number;
+    reward: number;
     isMy?: boolean;
   }) {
     if (index != -1 && index < 3) {
@@ -51,5 +55,6 @@ export class LeaderboardItem extends Component {
     }
     this.nameLabel.string = name;
     this.pointLabel.string = `${customerInfo.high_score_day}`;
+    this.rewardLabel.string = `${reward}`;
   }
 }
