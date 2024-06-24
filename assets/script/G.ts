@@ -22,7 +22,7 @@ class GlobalInstance {
   public FeatUIComponents: FeatUIPosition[];
   public backendHost: string;
   public dataStore: DataStore = new DataStore();
-  public isPlaying: boolean = false;
+  public isPlaying: boolean = true;
 
   private constructor() {
     this.FeatUIComponents = [];

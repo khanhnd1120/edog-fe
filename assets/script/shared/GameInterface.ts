@@ -48,6 +48,8 @@ export interface CustomerInfo {
   apt_earned: number;
   egon_earned: number;
   invite_link: string;
+  apt_referral_earned: number;
+  egon_referral_earned: number;
 }
 
 export interface DailyQuestInfo {}

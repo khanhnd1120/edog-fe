@@ -12,6 +12,10 @@ export class SceneUserInfo extends Component {
   aptEarnedLabel: Label;
   @property({ type: Label })
   egonEarnedLabel: Label;
+  @property({ type: Label })
+  aptCommissionLabel: Label;
+  @property({ type: Label })
+  egonCommissionLabel: Label;
 
   async start() {
     if (!G.gameRoot) return;
@@ -27,6 +31,8 @@ export class SceneUserInfo extends Component {
         }`;
         this.aptEarnedLabel.string = `${customerInfo.apt_earned ?? 0}`;
         this.egonEarnedLabel.string = `${customerInfo.egon_earned ?? 0}`;
+        this.aptCommissionLabel.string = `${customerInfo.apt_referral_earned}`;
+        this.egonCommissionLabel.string = `${customerInfo.egon_referral_earned}`;
       }
     });
     await G.dataStore.refreshCustomerInfo();

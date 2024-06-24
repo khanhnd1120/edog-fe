@@ -39,6 +39,10 @@ async function getLeaderboards() {
   return post("/get-leaderboard", {});
 }
 
+async function getPreLeaderboards() {
+  return post("/get-pre-leaderboard", {});
+}
+
 async function getCustomerQuest() {
   return post("/get-customer-quest", {});
 }
@@ -70,6 +74,7 @@ const api = {
   getConfig,
   getCustomerInfo,
   getLeaderboards,
+  getPreLeaderboards,
   getCustomerQuest,
   setWalletAddress,
   processQuest,

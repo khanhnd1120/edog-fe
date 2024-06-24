@@ -51,6 +51,7 @@ export class QuestItem extends Component {
     this.btnGo.active = false;
     this.nodeReward.active = false;
     this.claimedLabel.node.active = false;
+    this.inviteLinkNode.active = false;
     if (canClaim) {
       this.btnClaim.active = true;
       this.nodeReward.active = true;

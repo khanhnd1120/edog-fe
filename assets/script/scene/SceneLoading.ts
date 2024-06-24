@@ -18,6 +18,7 @@ export class SceneLoading extends Component {
     director.addPersistRootNode(this.gameRoot);
     Promise.all([this.initGlobal(), this.waitLoadConfig()]).then(() => {
       G.gameRoot.showDialog(DialogType.Instruct1);
+      G.isPlaying = false;
     });
   }
   async waitLoadConfig() {
