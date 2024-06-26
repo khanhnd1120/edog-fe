@@ -9720,7 +9720,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 299.88,
+      "width": 138.88,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -9749,7 +9749,7 @@
       "b": 194,
       "a": 255
     },
-    "_string": "User ID: dukthang",
+    "_string": "User ID: ",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 35,
@@ -13936,6 +13936,10 @@
     },
     "tutorial": {
       "__id__": 375
+    },
+    "toastPrefab": {
+      "__uuid__": "6262b442-ac5d-49e1-b33e-9a8c025dfd1b",
+      "__expectedType__": "cc.Prefab"
     },
     "_id": "de9uQ4FJFPsoa/nwnLbr5b"
   },

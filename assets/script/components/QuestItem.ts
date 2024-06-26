@@ -98,6 +98,7 @@ export class QuestItem extends Component {
           this.inviteLinkLabel.string =
             G.dataStore.customerInfo$.value.invite_link;
         }
+        G.gameRoot.showToast("Check your message");
         break;
     }
     const { customerDailyQuestInfo } = await api.processQuest(this.id);

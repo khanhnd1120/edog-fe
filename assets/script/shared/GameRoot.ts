@@ -1,6 +1,15 @@
-import { _decorator, Component, instantiate, Node, tween, Vec3 } from "cc";
+import {
+  _decorator,
+  Component,
+  instantiate,
+  Node,
+  Prefab,
+  tween,
+  Vec3,
+} from "cc";
 import { DialogType } from "./GameInterface";
 import { NewsManager } from "../news/NewsManager";
+import { Toast } from "../components/Toast";
 const { ccclass, property } = _decorator;
 
 const START_POSITION: Vec3 = new Vec3(0, 100, 0);
@@ -16,6 +25,8 @@ export class GameRoot extends Component {
   newsManager: NewsManager = null;
   @property({ type: Node })
   tutorial: Node = null;
+  @property({ type: Prefab })
+  toastPrefab: Prefab = null;
   dialogBg: Node[] = [];
 
   start() {
@@ -81,6 +92,12 @@ export class GameRoot extends Component {
         }
       )
       .start();
+  }
+
+  public showToast(content: string) {
+    const toast = instantiate(this.toastPrefab);
+    toast.getComponent(Toast).init({ content });
+    this.node.addChild(toast);
   }
 
   public hideAllDialog() {
