@@ -86,11 +86,9 @@ export class ColyseusManager extends Component {
   public async OnJoinGame(callback: any) {
     const name = "gold-digger";
     log(`${this.TAG} JoinGame ${this.game}`);
-    let searchParams = new URLSearchParams(window.location.search);
-    let token = searchParams.get("token");
     try {
       this.game = await this.client.joinOrCreate(name, {
-        token: token,
+        token: G.gameRoot.token,
       });
       log(`join ${name} successfully!`);
       log("user's sessionId:", this.game.sessionId);

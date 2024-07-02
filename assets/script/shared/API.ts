@@ -4,8 +4,7 @@ async function post(url: string, data: any): Promise<any> {
   if (!G.gameRoot || !G.backendHost) {
     return;
   }
-  let searchParams = new URLSearchParams(window.location.search);
-  let token = searchParams.get("token");
+  let token = G.gameRoot.token;
   try {
     let rs = await fetch(`${G.backendHost}${url}`, {
       method: "POST",

@@ -48,6 +48,9 @@ export class LeaderboardItem extends Component {
     }
     let name = customerInfo.user_name;
     if (!name) {
+      name = customerInfo.twitter_username;
+    }
+    if (!name) {
       name = customerInfo.first_name + " " + customerInfo.last_name;
     }
     if (!name) {

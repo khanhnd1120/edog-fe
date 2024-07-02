@@ -28,6 +28,8 @@ export class QuestItem extends Component {
   type: DailyQuestType;
   id: number;
   data: any;
+  isClaimed: boolean;
+  canClaim: boolean;
   init({
     name,
     description,
@@ -45,6 +47,8 @@ export class QuestItem extends Component {
     type: DailyQuestType;
     id: number;
   }) {
+    this.isClaimed = isClaimed;
+    this.canClaim = canClaim;
     this.nameLabel.string = name;
     this.descriptionLabel.string = description;
     this.btnClaim.active = false;
@@ -84,12 +88,12 @@ export class QuestItem extends Component {
     }
   }
   async onGoClick() {
+    let isCallProcess = false;
     switch (this.type) {
       case DailyQuestType.VisitLink:
         window.open(this.data.url, "_blank");
         break;
       case DailyQuestType.Referral:
-        console.log(G.dataStore.customerInfo$.value);
         if (
           G.dataStore.customerInfo$.value &&
           G.dataStore.customerInfo$.value.invite_link
@@ -100,9 +104,43 @@ export class QuestItem extends Component {
         }
         G.gameRoot.showToast("Check your message");
         break;
+      case DailyQuestType.InstantTweet:
+      case DailyQuestType.CommentTwitter:
+      case DailyQuestType.QuoteTweet:
+      case DailyQuestType.Retweet:
+        if (!this.isClaimed && !this.canClaim) {
+          isCallProcess = true;
+          const { customerDailyQuestInfo } = await api.processQuest(this.id);
+          let canClaim = false;
+          if (
+            customerDailyQuestInfo.number_rewards[
+              customerDailyQuestInfo.quest_ids.indexOf(this.id)
+            ] > 0
+          ) {
+            canClaim = true;
+          }
+          if (canClaim) {
+            this.btnClaim.active = true;
+            this.nodeReward.active = true;
+          } else {
+            if (this.data.content && this.type == DailyQuestType.InstantTweet) {
+              window.open(
+                `${this.data.url}?text=${encodeURIComponent(
+                  this.data.content
+                )}`,
+                "_blank"
+              );
+            } else {
+              window.open(this.data.url, "_blank");
+            }
+          }
+        }
+        break;
     }
-    const { customerDailyQuestInfo } = await api.processQuest(this.id);
-    G.dataStore.customerDailyQuest$.next(customerDailyQuestInfo);
+    if (!isCallProcess) {
+      const { customerDailyQuestInfo } = await api.processQuest(this.id);
+      G.dataStore.customerDailyQuest$.next(customerDailyQuestInfo);
+    }
   }
   async onClaimClick() {
     try {
