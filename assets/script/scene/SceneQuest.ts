@@ -50,10 +50,6 @@ export class SceneQuest extends Component {
               }
               break;
             case DailyQuestType.VisitLink:
-            case DailyQuestType.Retweet:
-            case DailyQuestType.CommentTwitter:
-            case DailyQuestType.QuoteTweet:
-            case DailyQuestType.InstantTweet:
               if (customerDailyQuestInfo.claimed_ids.includes(questId)) {
                 isClaimed = true;
               }

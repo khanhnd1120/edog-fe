@@ -7,10 +7,9 @@ import {
   tween,
   Vec3,
 } from "cc";
-import { DialogType, MessageIframeType } from "./GameInterface";
+import { DialogType } from "./GameInterface";
 import { NewsManager } from "../news/NewsManager";
 import { Toast } from "../components/Toast";
-import { G } from "../G";
 const { ccclass, property } = _decorator;
 
 const START_POSITION: Vec3 = new Vec3(0, 100, 0);
@@ -29,39 +28,12 @@ export class GameRoot extends Component {
   @property({ type: Prefab })
   toastPrefab: Prefab = null;
   dialogBg: Node[] = [];
-  token: string = "";
 
   start() {
     this.background.active = false;
     this.dialogNodes.forEach((n: Node) => {
       n.active = false;
     });
-    this.listenMessageIframe();
-    this.sendMessageIframe(MessageIframeType.LoadGameSuccess, {});
-  }
-
-  public sendMessageIframe(type: MessageIframeType, data: any) {
-    window.parent.postMessage({ ...data, type }, "*");
-  }
-
-  public listenMessageIframe() {
-    window.addEventListener("message", function (event) {
-      const { type, data } = event.data;
-      switch (type) {
-        case MessageIframeType.FishingToken:
-          const { token } = data;
-          G.gameRoot.setToken(token);
-          break;
-        case MessageIframeType.UpdateCustomer:
-          G.dataStore.refreshCustomerInfo();
-          break;
-      }
-    });
-  }
-
-  setToken(token: string) {
-    this.token = token;
-    G.dataStore.refreshCustomerInfo();
   }
 
   public showTutorial() {

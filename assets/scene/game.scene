@@ -4446,7 +4446,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 5.329070518200751e-15,
+      "x": 0,
       "y": -57.59700000000001,
       "z": 0
     },
@@ -4489,7 +4489,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 1,
       "y": 0.5
     },
     "_id": "127ntq0DJBJbPRmICFfDwG"
@@ -4547,7 +4547,7 @@
     "_alignFlags": 33,
     "_target": null,
     "_left": 805.077,
-    "_right": 145.4425,
+    "_right": 155.3425,
     "_top": 50.397000000000006,
     "_bottom": 0,
     "_horizontalCenter": 0,

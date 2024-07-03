@@ -40,7 +40,6 @@ export interface CustomerInfo {
   id: number;
   telegram_id: string;
   user_name: string;
-  twitter_username: string;
   first_name: string;
   last_name: string;
   highest_score: number;
@@ -51,7 +50,6 @@ export interface CustomerInfo {
   invite_link: string;
   apt_referral_earned: number;
   egon_referral_earned: number;
-  energy: number;
 }
 
 export interface DailyQuestInfo {}
@@ -61,20 +59,9 @@ export interface ConfigInfo {
   contactX: string;
   rule: string;
   exploreMore: string;
-  fishingEnergyFee: number;
 }
 
 export enum DailyQuestType {
   Referral,
   VisitLink,
-  Retweet,
-  CommentTwitter,
-  QuoteTweet,
-  InstantTweet,
-}
-
-export enum MessageIframeType {
-  LoadGameSuccess = "LoadGameSuccess",
-  FishingToken = "FishingToken",
-  UpdateCustomer = "UpdateCustomer",
 }
