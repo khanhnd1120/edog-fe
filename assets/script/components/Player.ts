@@ -113,7 +113,7 @@ export class Player extends Component {
                   tween()
                     .target(this.comboLabel)
                     .to(0.5, {
-                      fontSize: Math.min(28 * (1 + this.comboVal * 0.1), 35),
+                      fontSize: Math.min(30 * (1 + this.comboVal * 0.1), 55),
                     })
                     .start();
                   // this.comboLabel.fontSize = ;

@@ -102,7 +102,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -76.8135,
+      "x": -86.0635,
       "y": 0,
       "z": 0
     },
@@ -142,8 +142,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 99.25,
-      "height": 56.4
+      "width": 90,
+      "height": 81.6
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -180,14 +180,14 @@
     "_string": "+90",
     "_horizontalAlign": 2,
     "_verticalAlign": 1,
-    "_actualFontSize": 50,
-    "_fontSize": 50,
+    "_actualFontSize": 70,
+    "_fontSize": 70,
     "_fontFamily": "Arial",
-    "_lineHeight": 40,
+    "_lineHeight": 60,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "fba6b238-3cc2-49fd-ac0d-0bd5f1b36370",
+      "__uuid__": "8c48151e-1c6a-4ea1-b129-2a52e2ef5954",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -263,7 +263,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -18.363500000000002,
+      "x": -26.813500000000005,
       "y": 0,
       "z": 0
     },
@@ -303,8 +303,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 769,
-      "height": 439
+      "width": 785,
+      "height": 455
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -339,7 +339,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "98941917-5c94-48ff-ac70-0e3081f18754@f9941",
+      "__uuid__": "b975c8ca-cb11-473a-84db-6c16b2b173f7@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -399,7 +399,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 40.0865,
+      "x": 32.436499999999995,
       "y": 0,
       "z": 0
     },
@@ -439,7 +439,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133.01999999999998,
+      "width": 188,
       "height": 56.4
     },
     "_anchorPoint": {
@@ -477,14 +477,14 @@
     "_string": "( +30 bonus )",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 20,
-    "_fontSize": 20,
+    "_actualFontSize": 35,
+    "_fontSize": 35,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "fba6b238-3cc2-49fd-ac0d-0bd5f1b36370",
+      "__uuid__": "8c48151e-1c6a-4ea1-b129-2a52e2ef5954",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
@@ -680,6 +680,7 @@
       "__id__": 0
     },
     "fileId": "e0sdcVw1JF0ZMj1+Y8WjRJ",
-    "instance": null
+    "instance": null,
+    "targetOverrides": null
   }
 ]

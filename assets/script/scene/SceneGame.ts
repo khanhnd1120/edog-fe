@@ -164,8 +164,7 @@ export class SceneGame extends Component {
             G.isPlaying = false;
             if (
               G.dataStore.customerInfo$.value &&
-              !G.dataStore.customerInfo$.value.wallet_address &&
-              (this.totalAPT || this.totalEGON)
+              !G.dataStore.customerInfo$.value.wallet_address
             ) {
               G.gameRoot.showTutorial();
             }

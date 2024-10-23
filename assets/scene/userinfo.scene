@@ -444,7 +444,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -22.58499999999981,
+      "y": 278.1735000000002,
       "z": 0
     },
     "_lrot": {
@@ -482,7 +482,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1006.1119999999999,
-      "height": 983.3709999999999
+      "height": 381.8539999999998
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -508,7 +508,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 236
+      "a": 114
     },
     "_spriteFrame": {
       "__uuid__": "b730527c-3233-41c2-aaf7-7cdab58f9749@f9941",
@@ -550,7 +550,7 @@
         "__id__": 32
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 99
@@ -1667,7 +1667,7 @@
         "__id__": 52
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 55
@@ -2175,7 +2175,7 @@
         "__id__": 66
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 69
@@ -2683,7 +2683,7 @@
         "__id__": 80
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 83
@@ -3191,7 +3191,7 @@
         "__id__": 94
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 97
@@ -3645,7 +3645,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -302.682,
+      "y": 299.658,
       "z": 0
     },
     "_lrot": {

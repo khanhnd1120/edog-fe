@@ -1,6 +1,6 @@
 import { _decorator, Component, director, Label, Node } from "cc";
 import { G } from "../G";
-import { CustomerInfo } from "../shared/GameInterface";
+import { CustomerInfo, DialogType } from "../shared/GameInterface";
 import { TabManager } from "./TabManager";
 const { ccclass, property } = _decorator;
 
@@ -8,6 +8,8 @@ const { ccclass, property } = _decorator;
 export class Header extends Component {
   @property({ type: Label })
   userId: Label;
+  @property({ type: Label })
+  aptosWalletAddress: Label;
   @property({ type: Label })
   highScore: Label;
   @property({ type: TabManager })
@@ -28,6 +30,14 @@ export class Header extends Component {
         }
         this.userId.string = `UserID: ${name}`;
         this.highScore.string = `HIGHSCORE:      ${customerInfo.high_score_day}`;
+        this.aptosWalletAddress.string = `${
+          customerInfo.wallet_address
+            ? `APTOS Wallet: ${customerInfo.wallet_address.slice(
+                0,
+                6
+              )}...${customerInfo.wallet_address.slice(-8)}`
+            : "Enter Wallet Here..."
+        }`;
       }
     });
   }
@@ -36,5 +46,9 @@ export class Header extends Component {
     if (G.isPlaying) return;
     director.loadScene("userinfo");
     this.navbar.toggle(-1);
+  }
+
+  async onEditWallet() {
+    G.gameRoot.showDialog(DialogType.SetWallet);
   }
 }

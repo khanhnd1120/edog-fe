@@ -57,7 +57,7 @@ export class Fish extends Component {
   }) {
     let skeleton = this.node.getComponent(sp.Skeleton);
     // @ts-ignore
-    skeleton.defaultSkin = id;
+    skeleton.defaultSkin = `${id}_1`;
     setTimeout(() => {
       skeleton.animation = "idle";
     }, 20);
@@ -118,7 +118,7 @@ export class Fish extends Component {
       if (aptCoin <= 0) {
         this.aptCoin.active = false;
       }
-      if(!this.egonCoin.active && !this.aptCoin.active) {
+      if (!this.egonCoin.active && !this.aptCoin.active) {
         this.point.active = true;
       }
     });
@@ -126,7 +126,7 @@ export class Fish extends Component {
       if (egonCoin <= 0) {
         this.egonCoin.active = false;
       }
-      if(!this.egonCoin.active && !this.aptCoin.active) {
+      if (!this.egonCoin.active && !this.aptCoin.active) {
         this.point.active = true;
       }
     });

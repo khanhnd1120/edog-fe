@@ -169,7 +169,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "e0dce7a3-7461-4162-a0cb-c7f23f6060bd@f9941",
+      "__uuid__": "3b61a526-d4aa-4bc2-87b8-d481c4f4eaf8@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -302,7 +302,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "f59fb928-ea70-4735-9f76-32b979fc5751@f9941",
+      "__uuid__": "01907510-cd69-41bc-a83a-31930ad85232@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -458,8 +458,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 178,
-      "height": 95
+      "width": 181,
+      "height": 94
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -494,7 +494,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "83e43a6c-4b04-4254-bb62-522b9cb35d63@f9941",
+      "__uuid__": "cf734f12-ff2a-46d2-ba11-e9e2ac02a6e4@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -630,7 +630,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "f26ed9ed-099a-41e0-9391-328c9bc5cdc4@f9941",
+      "__uuid__": "38a70789-498e-4a5f-a768-ddd2759ca298@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 3,
@@ -751,7 +751,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 142.95,
+      "width": 96,
       "height": 252
     },
     "_anchorPoint": {
@@ -796,13 +796,13 @@
     "_overflow": 0,
     "_enableWrapText": true,
     "_font": {
-      "__uuid__": "fba6b238-3cc2-49fd-ac0d-0bd5f1b36370",
+      "__uuid__": "8c48151e-1c6a-4ea1-b129-2a52e2ef5954",
       "__expectedType__": "cc.TTFFont"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_isItalic": false,
-    "_isBold": false,
+    "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,

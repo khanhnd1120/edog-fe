@@ -13,6 +13,9 @@ export class DialogInstruct1 extends Component {
         G.gameRoot.hideDialog(DialogType.Instruct1);
         G.enterGame();
     }
+    openGameRule() {
+        window.open(G.dataStore.config$.value.rule, "_blank");
+    }
 }
 
 

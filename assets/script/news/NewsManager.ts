@@ -31,14 +31,14 @@ export class NewsManager extends Component {
       this.currentDT += 1;
       if (this.currentDT > 3) {
         this.currentDT = 0;
-        let pool = [NewsType.HighScore, NewsType.EarnAPT];
+        let pool = [NewsType.HighScore];
         this.indexNewsTypeShow = (this.indexNewsTypeShow + 1) % pool.length;
         this.showNews(pool[this.indexNewsTypeShow]);
       }
     }, 1000);
   }
   public showNews(type: NewsType, data?: any) {
-    if (![NewsType.HighScore, NewsType.EarnAPT].includes(type)) {
+    if (![NewsType.HighScore].includes(type)) {
       this.cooldownBlockJob = 3;
     }
     this.currentDT = 0;
